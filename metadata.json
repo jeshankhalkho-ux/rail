@@ -1,0 +1,6 @@
+{
+  "name": "RailTrack Portal",
+  "description": "Real-time high-speed Indian Railway running status, 3D motion telemetry, and CRIS schedule enquiry system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,2625 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-palette="saffron">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RailTrack Portal — Real Motion 3D Railway Telemetry & Command Center</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* =====================================================================
+       1. NON-BLUE & NON-GREEN EXECUTIVE DARK PALETTE SYSTEM
+          (Saffron Gold, Platinum Champagne, Rajdhani Crimson, Amethyst, Light)
+       ===================================================================== */
+    :root,
+    html[data-palette="saffron"] {
+      --bg-canvas: #09090b;
+      --bg-surface: #121215;
+      --bg-elevated: #18181c;
+      --bg-glass: rgba(20, 20, 24, 0.82);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(245, 158, 11, 0.45);
+      --accent-primary: #f59e0b;       /* Vande Saffron Gold */
+      --accent-secondary: #ea580c;     /* Deep Aerodynamic Tangelo */
+      --accent-glow: rgba(245, 158, 11, 0.22);
+      --accent-soft: rgba(245, 158, 11, 0.12);
+      --accent-text: #fbbf24;
+      --accent-champagne: #fde68a;
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+      --btn-fg: #09090b;
+    }
+
+    /* Palette 2: Platinum & Champagne Gold (Luxury Monochrome Dark) */
+    html[data-palette="platinum"] {
+      --bg-canvas: #08080a;
+      --bg-surface: #111114;
+      --bg-elevated: #19191e;
+      --bg-glass: rgba(18, 18, 22, 0.85);
+      --border-subtle: rgba(255, 255, 255, 0.09);
+      --border-focus: rgba(212, 175, 55, 0.48);
+      --accent-primary: #e5c158;       /* Champagne Gold */
+      --accent-secondary: #b38f2d;     /* Brushed Gold */
+      --accent-glow: rgba(229, 193, 88, 0.20);
+      --accent-soft: rgba(229, 193, 88, 0.12);
+      --accent-text: #f3d87d;
+      --accent-champagne: #ffffff;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --btn-fg: #09090b;
+    }
+
+    /* Palette 3: Rajdhani Crimson & Charcoal (Executive Ruby Dark) */
+    html[data-palette="crimson"] {
+      --bg-canvas: #0b0809;
+      --bg-surface: #141012;
+      --bg-elevated: #1e171a;
+      --bg-glass: rgba(22, 16, 19, 0.85);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(244, 63, 94, 0.48);
+      --accent-primary: #f43f5e;       /* Rajdhani Signal Crimson */
+      --accent-secondary: #e11d48;     /* Deep Ruby */
+      --accent-glow: rgba(244, 63, 94, 0.24);
+      --accent-soft: rgba(244, 63, 94, 0.12);
+      --accent-text: #fb7185;
+      --accent-champagne: #fecdd3;
+      --text-main: #fff1f2;
+      --text-muted: #a89f9f;
+      --btn-fg: #ffffff;
+    }
+
+    /* Palette 4: Amethyst Velvet (Modern Raycast / Linear Dark) */
+    html[data-palette="amethyst"] {
+      --bg-canvas: #09080d;
+      --bg-surface: #13111c;
+      --bg-elevated: #1c1829;
+      --bg-glass: rgba(19, 17, 28, 0.85);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(168, 85, 247, 0.48);
+      --accent-primary: #a855f7;       /* Royal Amethyst */
+      --accent-secondary: #7e22ce;     /* Deep Violet */
+      --accent-glow: rgba(168, 85, 247, 0.24);
+      --accent-soft: rgba(168, 85, 247, 0.13);
+      --accent-text: #c084fc;
+      --accent-champagne: #e9d5ff;
+      --text-main: #faf5ff;
+      --text-muted: #a19bb0;
+      --btn-fg: #ffffff;
+    }
+
+    /* Palette 5: High-Contrast Daylight Ivory (Clean Light Mode) */
+    html:not(.dark) {
+      --bg-canvas: #f6f5f2;
+      --bg-surface: #ffffff;
+      --bg-elevated: #f1efe9;
+      --bg-glass: rgba(255, 255, 255, 0.94);
+      --border-subtle: rgba(24, 24, 27, 0.10);
+      --border-focus: rgba(234, 88, 12, 0.45);
+      --accent-primary: #ea580c;       /* Terracotta Saffron */
+      --accent-secondary: #c2410c;
+      --accent-glow: rgba(234, 88, 12, 0.16);
+      --accent-soft: rgba(234, 88, 12, 0.10);
+      --accent-text: #c2410c;
+      --accent-champagne: #9a3412;
+      --text-main: #18181b;
+      --text-muted: #52525b;
+      --btn-fg: #ffffff;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      overflow-x: hidden;
+      transition: background-color 0.35s ease, color 0.35s ease;
+    }
+
+    /* Dynamic Theme Helper Classes */
+    .theme-surface {
+      background-color: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(24px);
+    }
+    .theme-elevated {
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+    }
+    .theme-accent-bg {
+      background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+      color: var(--btn-fg);
+    }
+    .theme-accent-text {
+      color: var(--accent-text);
+    }
+    .theme-accent-soft {
+      background-color: var(--accent-soft);
+      border: 1px solid var(--border-focus);
+      color: var(--accent-text);
+    }
+    .theme-input {
+      background-color: var(--bg-canvas);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .theme-input:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    /* Mouse-Tracked Spotlight Card Effect */
+    .spotlight-card {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .spotlight-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        380px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        var(--accent-glow),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .spotlight-card:hover::before {
+      opacity: 1;
+    }
+    .spotlight-card:hover {
+      border-color: var(--border-focus);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px -12px var(--accent-glow);
+    }
+
+    /* Ambient Warm Horizon Backdrop (Zero Blue, Zero Green) */
+    .ambient-backdrop {
+      background:
+        radial-gradient(circle at 18% 8%, var(--accent-glow) 0%, transparent 42%),
+        radial-gradient(circle at 84% 16%, rgba(251, 191, 36, 0.07) 0%, transparent 40%);
+    }
+
+    /* Executive CTA Button Specular Sweep */
+    .btn-executive {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 26px -6px var(--accent-glow);
+    }
+    .btn-executive::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      transform: rotate(25deg);
+      transition: left 0.65s ease;
+    }
+    .btn-executive:hover::after {
+      left: 130%;
+    }
+    .btn-executive:hover {
+      transform: translateY(-1.5px);
+      filter: brightness(1.06);
+      box-shadow: 0 14px 32px -4px var(--accent-glow);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(161, 161, 170, 0.25); border-radius: 9999px; }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col ambient-backdrop">
+
+  <!-- =====================================================================
+       1. OFFICIAL GOVERNMENT TOP BAR + NON-BLUE/NON-GREEN PALETTE SWITCHER
+       ===================================================================== -->
+  <div class="bg-[#060608] text-zinc-300 text-xs border-b border-white/10 px-4 sm:px-8 py-2 relative z-40">
+    <div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Left: Official Ministry Identity -->
+      <div class="flex items-center gap-3">
+        <span class="flex items-center gap-1.5 font-semibold theme-accent-text">
+          <i class="fa-solid fa-shield-halved"></i>
+          Official Government Portal
+        </span>
+        <span class="text-zinc-700">|</span>
+        <span class="font-semibold text-white tracking-wide">Ministry of Railways</span>
+        <span class="hidden xl:inline-flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-full theme-accent-soft text-[11px] font-mono">
+          <span class="w-1.5 h-1.5 rounded-full bg-current animate-ping"></span>
+          CRIS 60FPS Real-Motion Engine
+        </span>
+      </div>
+
+      <!-- Center: 4 Non-Blue / Non-Green Dark Themes + Light Mode -->
+      <div class="flex flex-wrap items-center gap-1 bg-zinc-900/95 px-2 py-1 rounded-xl border border-white/10">
+        <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-400 mr-1 hidden sm:inline">Executive Theme:</span>
+        
+        <button onclick="setPalette('saffron')" id="pal-saffron" class="palette-btn px-2.5 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1.5 bg-white/15 text-white border border-white/25 transition">
+          <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+          <span>Saffron Gold</span>
+        </button>
+
+        <button onclick="setPalette('platinum')" id="pal-platinum" class="palette-btn px-2.5 py-1 rounded-lg text-[11px] font-medium flex items-center gap-1.5 text-zinc-400 hover:text-white transition">
+          <span class="w-2 h-2 rounded-full bg-[#e5c158]"></span>
+          <span>Platinum</span>
+        </button>
+
+        <button onclick="setPalette('crimson')" id="pal-crimson" class="palette-btn px-2.5 py-1 rounded-lg text-[11px] font-medium flex items-center gap-1.5 text-zinc-400 hover:text-white transition">
+          <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+          <span>Crimson</span>
+        </button>
+
+        <button onclick="setPalette('amethyst')" id="pal-amethyst" class="palette-btn px-2.5 py-1 rounded-lg text-[11px] font-medium flex items-center gap-1.5 text-zinc-400 hover:text-white transition">
+          <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+          <span>Amethyst</span>
+        </button>
+      </div>
+
+      <!-- Right: Clock, Font Resizer (A- | A | A+) & High Contrast Toggle -->
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1.5 font-mono text-[11px] text-zinc-400">
+          <i class="fa-regular fa-clock theme-accent-text"></i>
+          <span id="live-ist-clock">28-10-2026 • 17:20:00 IST</span>
+        </div>
+
+        <div class="flex items-center gap-1 text-zinc-300 font-semibold text-xs border-l border-zinc-800 pl-3">
+          <button onclick="adjustFontSize(-1)" class="hover:text-white px-1" title="Decrease Font">A-</button>
+          <span class="text-zinc-700">|</span>
+          <button onclick="adjustFontSize(0)" class="hover:text-white px-1 font-bold" title="Default Font">A</button>
+          <span class="text-zinc-700">|</span>
+          <button onclick="adjustFontSize(1)" class="hover:text-white px-1" title="Increase Font">A+</button>
+        </div>
+
+        <button onclick="toggleLightMode()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-800/90 hover:bg-zinc-700 text-zinc-200 border border-white/10 transition text-xs font-medium">
+          <i id="mode-icon" class="fa-solid fa-sun text-amber-400"></i>
+          <span id="mode-text">High Contrast</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       2. MAIN NAVIGATION HEADER (Warm Executive Styling — No Blue/Green)
+       ===================================================================== -->
+  <header class="theme-surface sticky top-0 z-30 border-b px-4 sm:px-8 py-3.5 shadow-xl">
+    <div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Brand Identity -->
+      <a href="#" onclick="switchMainTab('live'); return false;" class="flex items-center gap-3.5 group">
+        <div class="w-11 h-11 rounded-2xl theme-accent-bg flex items-center justify-center shadow-lg transition-transform group-hover:scale-105">
+          <i class="fa-solid fa-train-subway text-lg"></i>
+        </div>
+        <div>
+          <div class="text-xl font-extrabold tracking-tight flex items-center gap-1">
+            <span>RailTrack</span>
+            <span class="theme-accent-text">Portal</span>
+          </div>
+          <div class="text-[10px] font-mono uppercase tracking-widest opacity-60 -mt-0.5">
+            National High-Speed Telemetry & Motion Command
+          </div>
+        </div>
+      </a>
+
+      <!-- Center Segmented Navigation Tabs (Matches User's Screenshot) -->
+      <nav class="flex items-center p-1.5 rounded-2xl theme-elevated shadow-inner">
+        <button onclick="switchMainTab('live')" id="tab-btn-live" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all theme-accent-bg shadow-sm flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-current animate-ping"></span>
+          <span>Live Status</span>
+        </button>
+        <button onclick="switchMainTab('schedule')" id="tab-btn-schedule" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all opacity-70 hover:opacity-100 flex items-center gap-2">
+          <i class="fa-regular fa-calendar-lines text-xs"></i>
+          <span>Schedule</span>
+        </button>
+        <button onclick="switchMainTab('between')" id="tab-btn-between" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all opacity-70 hover:opacity-100 flex items-center gap-2">
+          <i class="fa-solid fa-route text-xs"></i>
+          <span>Trains Between</span>
+        </button>
+      </nav>
+
+      <!-- Right System Status Pill (Warm Sovereign Accent — No Blue/Green) -->
+      <div class="flex items-center gap-3">
+        <div class="hidden xl:flex items-center gap-3 px-3.5 py-1.5 rounded-xl theme-elevated text-xs">
+          <span class="opacity-65">Active Corridors:</span>
+          <span class="font-mono font-bold theme-accent-text">13,492 LIVE</span>
+          <span class="opacity-30">|</span>
+          <span class="opacity-65">Render:</span>
+          <span class="font-mono font-bold theme-accent-text" id="fps-counter">60 FPS</span>
+        </div>
+
+        <div class="flex items-center gap-2 px-4 py-1.5 rounded-full theme-accent-soft text-xs font-bold tracking-wider uppercase">
+          <span class="w-2 h-2 rounded-full bg-current animate-pulse"></span>
+          <span>SYSTEM SECURE</span>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       3. MAIN EXECUTIVE DASHBOARD CONTAINER
+       ===================================================================== -->
+  <main class="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-8 py-7">
+
+    <div class="theme-surface rounded-3xl p-5 sm:p-8 shadow-2xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- ===============================================================
+             LEFT COLUMN (8 COLS):
+             1. 60FPS HTML5 Canvas Real Motion Viewport (3 Camera Modes)
+             2. Track Live Status Search Bar + Autocomplete + Quick Pills
+             3. Live Corridor Station Scrubber & Coach Composition
+             =============================================================== -->
+        <div class="lg:col-span-8 space-y-6">
+
+          <!-- 1A. 60FPS HTML5 CANVAS REAL-MOTION VIEWPORT (NO CARTOON SVG!) -->
+          <div class="rounded-2xl bg-[#070709] border border-white/10 overflow-hidden shadow-2xl relative">
+            
+            <!-- Top Floating Telemetry & Camera Mode Bar -->
+            <div class="px-4 py-3 bg-zinc-950/95 border-b border-white/10 flex flex-wrap items-center justify-between gap-3 relative z-20">
+              <div class="flex items-center gap-3">
+                <span id="hud-train-num" class="px-2.5 py-1 rounded-lg theme-accent-bg font-mono font-extrabold text-xs">
+                  20891
+                </span>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h2 id="hud-train-name" class="text-white font-bold text-sm sm:text-base tracking-tight">
+                      TATA–BAM Vande Bharat Express
+                    </h2>
+                    <span id="hud-train-badge" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold theme-accent-soft">
+                      ● LIVE TELEMETRY
+                    </span>
+                  </div>
+                  <p id="hud-train-sub" class="text-[11px] font-mono text-zinc-400">
+                    Tatanagar Jn (TATA) ➔ Brahmapur (BAM) • Sovereign Saffron Edition
+                  </p>
+                </div>
+              </div>
+
+              <!-- Live Camera Angle Switcher (3D Chase / Cinema Pan / Cockpit POV) -->
+              <div class="flex flex-wrap items-center gap-2">
+                <!-- Authentic Indian Railways Rake / Model Switcher -->
+                <div class="flex items-center gap-1 bg-zinc-900 p-1 rounded-xl border border-white/10">
+                  <button onclick="setRakeModel('vb-saffron')" id="rake-btn-vb-saffron" class="px-2.5 py-1 rounded-lg text-[11px] font-bold theme-accent-bg transition flex items-center gap-1.5" title="Vande Bharat 2.0 Saffron-Grey">
+                    <i class="fa-solid fa-train text-[10px]"></i>
+                    <span>Vande Saffron</span>
+                  </button>
+                  <button onclick="setRakeModel('vb-white')" id="rake-btn-vb-white" class="px-2.5 py-1 rounded-lg text-[11px] font-medium text-zinc-400 hover:text-white transition flex items-center gap-1.5" title="Vande Bharat Classic Pearl White">
+                    <i class="fa-solid fa-train-subway text-[10px]"></i>
+                    <span>Vande Pearl</span>
+                  </button>
+                  <button onclick="setRakeModel('wap7-lhb')" id="rake-btn-wap7-lhb" class="px-2.5 py-1 rounded-lg text-[11px] font-medium text-zinc-400 hover:text-white transition flex items-center gap-1.5" title="WAP-7 Electric Loco + LHB Rajdhani">
+                    <i class="fa-solid fa-bolt text-[10px]"></i>
+                    <span>WAP-7 + LHB</span>
+                  </button>
+                </div>
+
+                <!-- Camera Angle Switcher -->
+                <div class="flex items-center gap-1 bg-zinc-900 p-1 rounded-xl border border-white/10">
+                  <button onclick="setCameraMode('cinema')" id="cam-btn-cinema" class="px-2.5 py-1 rounded-lg text-[11px] font-bold theme-accent-bg transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-video text-[10px]"></i>
+                    <span>Real Train 3/4 Cam</span>
+                  </button>
+                  <button onclick="setCameraMode('chase')" id="cam-btn-chase" class="px-2.5 py-1 rounded-lg text-[11px] font-medium text-zinc-400 hover:text-white transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-cube text-[10px]"></i>
+                    <span>3D Corridor</span>
+                  </button>
+                  <button onclick="setCameraMode('cockpit')" id="cam-btn-cockpit" class="px-2.5 py-1 rounded-lg text-[11px] font-medium text-zinc-400 hover:text-white transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-eye text-[10px]"></i>
+                    <span>Cab Desk POV</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- HTML5 Hardware-Accelerated 3D Motion Canvas -->
+            <div class="relative h-72 sm:h-[340px] w-full bg-[#060608] overflow-hidden select-none">
+              <canvas id="real-motion-canvas" class="w-full h-full block"></canvas>
+
+              <!-- Floating Translucent Telemetry HUD Overlay (Top-Left) -->
+              <div class="absolute top-3.5 left-4 z-10 pointer-events-none flex flex-wrap items-center gap-2">
+                <div class="px-3 py-1.5 rounded-xl bg-black/65 backdrop-blur-md border border-white/10 flex items-center gap-3 font-mono">
+                  <div>
+                    <div class="text-[9px] uppercase tracking-widest text-zinc-400">Ground Velocity</div>
+                    <div class="text-lg font-extrabold theme-accent-text leading-tight">
+                      <span id="hud-speed-value">130</span> <span class="text-xs font-normal text-zinc-400">km/h</span>
+                    </div>
+                  </div>
+                  <div class="h-6 w-[1px] bg-white/10"></div>
+                  <div>
+                    <div class="text-[9px] uppercase tracking-widest text-zinc-400">Next Station (11.4 km)</div>
+                    <div id="hud-next-station" class="text-xs font-bold text-amber-200">
+                      Balasore (BLS) • PF #3
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floating Weather & Atmosphere Switcher (Top-Right) -->
+              <div class="absolute top-3.5 right-4 z-10 flex items-center gap-1 bg-black/65 backdrop-blur-md p-1 rounded-xl border border-white/10 text-[11px]">
+                <button onclick="setWeatherMode('dusk')" id="wx-dusk" class="px-2.5 py-1 rounded-lg font-bold bg-white/15 text-amber-300 transition">
+                  <i class="fa-solid fa-sun mr-1"></i>Golden Dusk
+                </button>
+                <button onclick="setWeatherMode('rain')" id="wx-rain" class="px-2.5 py-1 rounded-lg font-medium text-zinc-400 hover:text-white transition">
+                  <i class="fa-solid fa-cloud-showers-heavy mr-1"></i>Midnight Rain
+                </button>
+                <button onclick="setWeatherMode('twilight')" id="wx-twilight" class="px-2.5 py-1 rounded-lg font-medium text-zinc-400 hover:text-white transition">
+                  <i class="fa-solid fa-moon mr-1"></i>Crimson Night
+                </button>
+              </div>
+
+              <!-- Floating Bottom-Left Telemetry Callout -->
+              <div class="absolute bottom-3 left-4 z-10 pointer-events-none hidden sm:flex items-center gap-2">
+                <div class="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/10 text-[11px] font-mono flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                  <span id="floating-loco-tag" class="text-amber-300 font-bold">3D PERSPECTIVE TELEMETRY</span>
+                  <span class="text-zinc-600">|</span>
+                  <span id="floating-eta-tag" class="text-zinc-300">OHE 25kV AC • TRACTION ACTIVE</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Physics & Throttle Control Bar -->
+            <div class="px-4 py-2.5 bg-zinc-950 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-300">
+              <div class="flex items-center gap-3">
+                <span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400">
+                  <i class="fa-solid fa-gauge-high theme-accent-text mr-1"></i>Locomotive Throttle:
+                </span>
+                <input
+                  id="speed-slider"
+                  type="range"
+                  min="0"
+                  max="160"
+                  value="130"
+                  oninput="setTargetThrottle(this.value)"
+                  class="w-28 sm:w-40 accent-amber-500 cursor-pointer"
+                />
+                <span id="throttle-label" class="font-mono text-xs font-bold theme-accent-text">130 km/h</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button onclick="toggleStationBrake()" id="halt-btn" class="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-white/10 font-semibold text-[11px] transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-circle-stop text-rose-400"></i>
+                  <span id="halt-btn-text">Engage Friction Brake</span>
+                </button>
+
+                <button onclick="boostHighSpeed()" class="px-3 py-1.5 rounded-lg theme-accent-soft font-bold text-[11px] transition flex items-center gap-1.5 hover:opacity-90">
+                  <i class="fa-solid fa-bolt"></i>
+                  <span>160 km/h Boost</span>
+                </button>
+
+                <button onclick="triggerHornArc()" class="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-white/10 font-semibold text-[11px] transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i>
+                  <span>OHE Arc Flash</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ===============================================================
+               1B. TRACK LIVE STATUS SEARCH BAR + AUTOCOMPLETE + TIMELINE
+               =============================================================== -->
+          <div id="view-live-status" class="space-y-6">
+            
+            <!-- Search Card (Matches User's Screenshot Structure with Executive Polish) -->
+            <div class="p-6 rounded-2xl theme-elevated space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                    Track Live Status
+                  </h1>
+                  <p class="text-xs sm:text-sm opacity-70 mt-0.5">
+                    Enter a train number and date to get real-time running information.
+                  </p>
+                </div>
+                <span class="px-3 py-1 rounded-full theme-accent-soft text-xs font-mono font-bold">
+                  GPS LOCKED • 0m DELAY
+                </span>
+              </div>
+
+              <!-- Search Input Row with Instant Autocomplete Dropdown -->
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 relative">
+                <div class="relative flex-1">
+                  <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 theme-accent-text"></i>
+                  <input
+                    id="main-train-input"
+                    type="text"
+                    value="20891"
+                    autocomplete="off"
+                    onfocus="showTrainSuggestions()"
+                    oninput="filterTrainSuggestions(this.value)"
+                    placeholder="Train Number (e.g. 12050, 20891, 20892)"
+                    class="w-full pl-11 pr-4 py-3.5 rounded-xl theme-input text-sm font-semibold"
+                  />
+                  <!-- Instant Autocomplete Suggestions Menu -->
+                  <div id="train-suggestions" class="hidden absolute left-0 right-0 top-full mt-2 rounded-2xl theme-surface shadow-2xl border border-white/15 z-30 overflow-hidden divide-y divide-white/5">
+                    <!-- Populated via JS -->
+                  </div>
+                </div>
+
+                <div class="relative sm:w-48">
+                  <i class="fa-regular fa-calendar absolute left-3.5 top-1/2 -translate-y-1/2 theme-accent-text pointer-events-none"></i>
+                  <input
+                    id="main-date-input"
+                    type="date"
+                    value="2026-10-28"
+                    class="w-full pl-10 pr-3 py-3.5 rounded-xl theme-input text-sm font-mono"
+                  />
+                </div>
+
+                <button
+                  onclick="selectTrainFromInput()"
+                  class="btn-executive theme-accent-bg px-7 py-3.5 rounded-xl font-extrabold text-sm flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
+                  <i class="fa-solid fa-satellite-dish"></i>
+                  <span>Track Train</span>
+                </button>
+              </div>
+
+              <!-- One-Click Popular Express Pills -->
+              <div class="pt-1 flex flex-wrap items-center gap-2 text-xs">
+                <span class="opacity-60 font-semibold mr-1">Instant Corridor Feed:</span>
+                <button onclick="loadTrainTelemetry('20891', '06 Sep 2026')" class="px-3 py-1.5 rounded-xl theme-surface hover:border-amber-500/50 transition font-mono flex items-center gap-1.5">
+                  <span class="theme-accent-text font-bold">20891</span>
+                  <span class="font-sans opacity-85">TATA–BAM Vande Bharat</span>
+                </button>
+                <button onclick="loadTrainTelemetry('20892', '04 Sep 2026')" class="px-3 py-1.5 rounded-xl theme-surface hover:border-amber-500/50 transition font-mono flex items-center gap-1.5">
+                  <span class="theme-accent-text font-bold">20892</span>
+                  <span class="font-sans opacity-85">BAM–TATA Vande Bharat</span>
+                </button>
+                <button onclick="loadTrainTelemetry('12050', 'Full Schedule')" class="px-3 py-1.5 rounded-xl theme-surface hover:border-amber-500/50 transition font-mono flex items-center gap-1.5">
+                  <span class="theme-accent-text font-bold">12050</span>
+                  <span class="font-sans opacity-85">Gatimaan Express (160 km/h)</span>
+                </button>
+                <button onclick="loadTrainTelemetry('22436', '28 Oct 2026')" class="px-3 py-1.5 rounded-xl theme-surface hover:border-amber-500/50 transition font-mono flex items-center gap-1.5">
+                  <span class="theme-accent-text font-bold">22436</span>
+                  <span class="font-sans opacity-85">NDLS–BSB Vande Bharat</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 1C. LIVE CORRIDOR STATION PROGRESSION & RAKE COMPOSITION -->
+            <div class="p-6 rounded-2xl theme-elevated space-y-5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full theme-accent-bg animate-ping"></span>
+                  <h3 class="text-xs font-bold uppercase tracking-wider opacity-85">
+                    Live Corridor Station Progression
+                  </h3>
+                </div>
+                <span id="timeline-summary-text" class="text-xs font-mono theme-accent-text font-semibold">
+                  Departed Hijli (HIJ) • Approaching Balasore (BLS) in 11 mins
+                </span>
+              </div>
+
+              <!-- Horizontal Station Stepper -->
+              <div class="overflow-x-auto pb-2">
+                <div id="station-timeline-track" class="min-w-[640px] flex items-start justify-between pt-3">
+                  <!-- Populated dynamically via JS -->
+                </div>
+              </div>
+
+              <!-- Interactive Coach Composition Strip -->
+              <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="text-xs">
+                  <span class="font-bold uppercase tracking-wider opacity-60">Rake Coach Telemetry:</span>
+                  <span id="coach-info-label" class="ml-2 font-mono theme-accent-text">Click any coach to inspect seating & platform boarding zone</span>
+                </div>
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+                  <button onclick="inspectCoach('LOCO', 'Aerodynamic Driving Cab • Traction 100%')" class="px-2.5 py-1 rounded-md theme-accent-bg font-mono text-[11px] font-extrabold shrink-0">LOCO</button>
+                  <button onclick="inspectCoach('C1', 'AC Chair Car • 78 Seats • Boarding Zone A')" class="px-2 py-1 rounded-md theme-surface font-mono text-[11px] shrink-0">C1</button>
+                  <button onclick="inspectCoach('C2', 'AC Chair Car • 78 Seats • Boarding Zone A')" class="px-2 py-1 rounded-md theme-surface font-mono text-[11px] shrink-0">C2</button>
+                  <button onclick="inspectCoach('C3', 'AC Chair Car • 78 Seats • Boarding Zone B')" class="px-2 py-1 rounded-md theme-surface font-mono text-[11px] shrink-0">C3</button>
+                  <button onclick="inspectCoach('E1', 'Executive Class (180° Rotating Seats) • VIP Lounge')" class="px-2.5 py-1 rounded-md theme-accent-soft font-mono text-[11px] font-bold shrink-0">E1</button>
+                  <button onclick="inspectCoach('E2', 'Executive Class • Hot Pantry & Infotainment • Zone C')" class="px-2.5 py-1 rounded-md theme-accent-soft font-mono text-[11px] font-bold shrink-0">E2</button>
+                  <button onclick="inspectCoach('C4', 'AC Chair Car • 78 Seats • Boarding Zone C')" class="px-2 py-1 rounded-md theme-surface font-mono text-[11px] shrink-0">C4</button>
+                  <button onclick="inspectCoach('C5..C14', 'AC Chair Car Coaches C5 to C14 • Rear Driving Cab')" class="px-2 py-1 rounded-md theme-surface font-mono text-[11px] shrink-0">C5..C14</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ===============================================================
+               TAB 2 VIEW: FULL TRAIN SCHEDULE TABLE
+               =============================================================== -->
+          <div id="view-schedule" class="hidden p-6 rounded-2xl theme-elevated space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-xl font-extrabold">Complete Station Timetable — <span id="sched-title-num" class="theme-accent-text">20891 Vande Bharat</span></h2>
+                <p class="text-xs opacity-65">Official CRIS Halt Timings, Distance, and Platform Assignments</p>
+              </div>
+              <button onclick="switchMainTab('live')" class="px-3 py-1.5 rounded-xl theme-accent-soft text-xs font-bold">
+                ← Back to Live Search
+              </button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs font-mono">
+                <thead>
+                  <tr class="border-b border-white/10 opacity-60 uppercase">
+                    <th class="py-2.5 px-3">Code</th>
+                    <th class="py-2.5 px-3">Station Name</th>
+                    <th class="py-2.5 px-3">Arr</th>
+                    <th class="py-2.5 px-3">Dep</th>
+                    <th class="py-2.5 px-3">Halt</th>
+                    <th class="py-2.5 px-3">Platform</th>
+                    <th class="py-2.5 px-3">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="schedule-table-body" class="divide-y divide-white/5">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ===============================================================
+               TAB 3 VIEW: TRAINS BETWEEN STATIONS
+               =============================================================== -->
+          <div id="view-between" class="hidden p-6 rounded-2xl theme-elevated space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-xl font-extrabold">Direct High-Speed Express Corridors</h2>
+                <p class="text-xs opacity-65">Click any corridor row to launch its 3D Real-Motion Telemetry</p>
+              </div>
+              <button onclick="switchMainTab('live')" class="px-3 py-1.5 rounded-xl theme-accent-soft text-xs font-bold">
+                ← Back to Live Search
+              </button>
+            </div>
+            <div class="space-y-3">
+              <div onclick="loadTrainTelemetry('20891', '06 Sep 2026'); switchMainTab('live');" class="spotlight-card cursor-pointer p-4 rounded-xl theme-surface flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <span class="px-2 py-0.5 rounded theme-accent-bg font-mono font-bold text-xs">20891</span>
+                  <span class="font-bold text-sm ml-2">TATA–BAM Vande Bharat Express</span>
+                  <div class="text-xs opacity-65 font-mono mt-1">TATA (14:50) ➔ BBS (20:10) ➔ BAM (23:05) • 08h 15m</div>
+                </div>
+                <span class="px-3 py-1 rounded-full theme-accent-soft font-mono text-xs font-bold">130 km/h • Launch 3D →</span>
+              </div>
+
+              <div onclick="loadTrainTelemetry('20892', '04 Sep 2026'); switchMainTab('live');" class="spotlight-card cursor-pointer p-4 rounded-xl theme-surface flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <span class="px-2 py-0.5 rounded theme-accent-bg font-mono font-bold text-xs">20892</span>
+                  <span class="font-bold text-sm ml-2">BAM–TATA Vande Bharat Express</span>
+                  <div class="text-xs opacity-65 font-mono mt-1">BAM (05:00) ➔ BBS (07:15) ➔ TATA (13:15) • 08h 15m</div>
+                </div>
+                <span class="px-3 py-1 rounded-full theme-accent-soft font-mono text-xs font-bold">124 km/h • Launch 3D →</span>
+              </div>
+
+              <div onclick="loadTrainTelemetry('12050', 'Full Schedule'); switchMainTab('live');" class="spotlight-card cursor-pointer p-4 rounded-xl theme-surface flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <span class="px-2 py-0.5 rounded theme-accent-bg font-mono font-bold text-xs">12050</span>
+                  <span class="font-bold text-sm ml-2">NZM–VGLJ Gatimaan Express</span>
+                  <div class="text-xs opacity-65 font-mono mt-1">NZM (08:10) ➔ AGC (09:50) ➔ VGLJ (12:35) • 04h 25m</div>
+                </div>
+                <span class="px-3 py-1 rounded-full theme-accent-soft font-mono text-xs font-bold">160 km/h • Launch 3D →</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ===============================================================
+             RIGHT COLUMN (4 COLS):
+             RECENT LOOKUPS (All 5 items from user's screenshot with Spotlight)
+             =============================================================== -->
+        <div class="lg:col-span-4 lg:border-l border-white/10 lg:pl-8 flex flex-col justify-between space-y-5">
+          
+          <div>
+            <!-- Right Column Header -->
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest opacity-70">
+                <i class="fa-regular fa-clock theme-accent-text"></i>
+                <span>Recent Lookups</span>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full theme-accent-soft text-[10px] font-mono font-bold">
+                Interactive 3D Sync
+              </span>
+            </div>
+
+            <!-- The 5 Recent Lookups from User's Screenshot -->
+            <div id="recent-lookups-container" class="space-y-3">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- Executive Traction & Corridor Telemetry Box -->
+          <div class="p-4 rounded-2xl theme-elevated space-y-3">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold uppercase tracking-wider opacity-65">3D Motion Telemetry</span>
+              <span class="font-mono theme-accent-text font-semibold">● KAVACH v4.0</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs font-mono">
+              <div class="p-2.5 rounded-xl theme-surface">
+                <div class="text-[10px] opacity-60">Catenary Line</div>
+                <div class="font-bold mt-0.5">25.4 kV AC</div>
+              </div>
+              <div class="p-2.5 rounded-xl theme-surface">
+                <div class="text-[10px] opacity-60">Braking Temp</div>
+                <div id="brake-temp-readout" class="font-bold theme-accent-text mt-0.5">185°C NOMINAL</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- =====================================================================
+       JAVASCRIPT: 60FPS HTML5 3D REAL-MOTION ENGINE & TELEMETRY CONTROLLER
+       ===================================================================== -->
+  <script>
+    // 1. Train Telemetry Dataset (Matches User's Screenshot Lookups + Authentic Rake Models)
+    const TRAIN_DATABASE = {
+      '20891': {
+        number: '20891',
+        name: 'TATA–BAM Vande Bharat Express',
+        routeShort: 'TATA ➔ BAM',
+        corridor: 'Tatanagar Jn (TATA) ➔ Brahmapur (BAM) • Vande Bharat 2.0 Saffron Rake',
+        rakeModel: 'vb-saffron',
+        boardText: '20891 TATA - BAM VANDE BHARAT EXP',
+        speed: 130,
+        status: '● ON TIME',
+        nextStation: 'Balasore (BLS) • PF #3',
+        etaText: 'OHE 25kV AC • ETA BLS: 11m',
+        summaryText: 'Departed Hijli (HIJ) • Cruising toward Balasore (BLS) at 130 km/h',
+        bodyPrimary: '#ea580c',   // Authentic Vande Bharat 2.0 Saffron Orange
+        bodySecondary: '#27272a', // Deep Charcoal Grey Lower Skirt
+        stripeColor: '#fbbf24',   // Warm Gold/White Aerodynamic Accent
+        stations: [
+          { code: 'TATA', name: 'Tatanagar Jn', arr: 'Start', dep: '14:50', pf: '1', done: true },
+          { code: 'HIJ', name: 'Hijli', arr: '16:23', dep: '16:25', pf: '2', done: true },
+          { code: 'BLS', name: 'Balasore', arr: '17:23', dep: '17:25', pf: '3', current: true },
+          { code: 'BHC', name: 'Bhadrak', arr: '18:05', dep: '18:07', pf: '2', done: false },
+          { code: 'CTC', name: 'Cuttack Jn', arr: '19:35', dep: '19:37', pf: '1', done: false },
+          { code: 'BBS', name: 'Bhubaneswar', arr: '20:10', dep: '20:15', pf: '4', done: false },
+          { code: 'BAM', name: 'Brahmapur', arr: '23:05', dep: 'End', pf: '1', done: false }
+        ]
+      },
+      '20892': {
+        number: '20892',
+        name: 'BAM–TATA Vande Bharat Express',
+        routeShort: 'BAM ➔ TATA',
+        corridor: 'Brahmapur (BAM) ➔ Tatanagar Jn (TATA) • Pearl White Executive Rake',
+        rakeModel: 'vb-white',
+        boardText: '20892 BAM - TATA VANDE BHARAT EXP',
+        speed: 124,
+        status: '● ON TIME',
+        nextStation: 'Cuttack Jn (CTC) • PF #1',
+        etaText: 'OHE 25kV AC • ETA CTC: 8m',
+        summaryText: 'Departed Bhubaneswar (BBS) • Approaching Cuttack Jn (CTC)',
+        bodyPrimary: '#f4f4f5',   // Pearl White Glossy Body
+        bodySecondary: '#18181b', // Obsidian Visor Band
+        stripeColor: '#e11d48',   // Executive Crimson/Amber Waist Stripe
+        stations: [
+          { code: 'BAM', name: 'Brahmapur', arr: 'Start', dep: '05:00', pf: '1', done: true },
+          { code: 'KUR', name: 'Khurda Road', arr: '06:45', dep: '06:50', pf: '3', done: true },
+          { code: 'BBS', name: 'Bhubaneswar', arr: '07:10', dep: '07:15', pf: '1', done: true },
+          { code: 'CTC', name: 'Cuttack Jn', arr: '07:45', dep: '07:47', pf: '1', current: true },
+          { code: 'BHC', name: 'Bhadrak', arr: '09:02', dep: '09:04', pf: '2', done: false },
+          { code: 'BLS', name: 'Balasore', arr: '09:50', dep: '09:52', pf: '2', done: false },
+          { code: 'TATA', name: 'Tatanagar Jn', arr: '13:15', dep: 'End', pf: '1', done: false }
+        ]
+      },
+      '12050': {
+        number: '12050',
+        name: 'NZM–VGLJ Gatimaan / Rajdhani LHB',
+        routeShort: 'NZM ➔ VGLJ',
+        corridor: 'H. Nizamuddin (NZM) ➔ VGL Jhansi (VGLJ) • WAP-7 + LHB AC Express',
+        rakeModel: 'wap7-lhb',
+        boardText: '12050 NZM - VGLJ GATIMAAN EXP',
+        speed: 160,
+        status: '⚡ 160 KM/H MAX',
+        nextStation: 'Agra Cantt (AGC) • PF #2',
+        etaText: 'WAP-7 6000HP • ETA AGC: 6m',
+        summaryText: 'Hauled by WAP-7 Electric Loco at 160 km/h • Taj High-Speed Corridor',
+        bodyPrimary: '#be123c',   // LHB Rajdhani Crimson Livery
+        bodySecondary: '#d4d4d8', // Brushed Stainless Steel Roof/Skirt
+        stripeColor: '#fde047',   // Gold/Ivory Waistline
+        stations: [
+          { code: 'NZM', name: 'H. Nizamuddin', arr: 'Start', dep: '08:10', pf: '4', done: true },
+          { code: 'AGC', name: 'Agra Cantt', arr: '09:50', dep: '09:55', pf: '2', current: true },
+          { code: 'GWL', name: 'Gwalior Jn', arr: '11:07', dep: '11:09', pf: '1', done: false },
+          { code: 'DAA', name: 'Datia', arr: '12:00', dep: '12:02', pf: '2', done: false },
+          { code: 'VGLJ', name: 'VGL Jhansi Jn', arr: '12:35', dep: 'End', pf: '3', done: false }
+        ]
+      },
+      '22436': {
+        number: '22436',
+        name: 'NDLS–BSB Vande Bharat Express',
+        routeShort: 'NDLS ➔ BSB',
+        corridor: 'New Delhi (NDLS) ➔ Varanasi Jn (BSB) • Flagship Northern Corridor',
+        rakeModel: 'vb-white',
+        boardText: '22436 NDLS - BSB VANDE BHARAT EXP',
+        speed: 135,
+        status: '● ON TIME',
+        nextStation: 'Prayagraj Jn (PRYJ) • PF #1',
+        etaText: 'OHE 25kV AC • ETA PRYJ: 14m',
+        summaryText: 'Departed Kanpur Central (CNB) • Cruising at 135 km/h',
+        bodyPrimary: '#f4f4f5',
+        bodySecondary: '#18181b',
+        stripeColor: '#f59e0b',
+        stations: [
+          { code: 'NDLS', name: 'New Delhi', arr: 'Start', dep: '06:00', pf: '16', done: true },
+          { code: 'CNB', name: 'Kanpur Central', arr: '10:08', dep: '10:12', pf: '1', done: true },
+          { code: 'PRYJ', name: 'Prayagraj Jn', arr: '12:08', dep: '12:12', pf: '1', current: true },
+          { code: 'BSB', name: 'Varanasi Jn', arr: '14:00', dep: 'End', pf: '4', done: false }
+        ]
+      }
+    };
+
+    // Exact 5 Recent Lookups from User's Screenshot
+    const RECENT_LOOKUPS = [
+      { id: 1, type: 'Live Status', number: '20891', dateLabel: '06 Sep 2026', badge: '130 km/h', progress: 68 },
+      { id: 2, type: 'Live Status', number: '20891', dateLabel: '04 Sep 2026', badge: 'ON TIME', progress: 84 },
+      { id: 3, type: 'Live Status', number: '20892', dateLabel: '04 Sep 2026', badge: '124 km/h', progress: 56 },
+      { id: 4, type: 'Schedule', number: '20892', dateLabel: 'Full Schedule', badge: '7 Halts', progress: 100 },
+      { id: 5, type: 'Schedule', number: '12050', dateLabel: 'Full Schedule', badge: '160 km/h', progress: 100 }
+    ];
+
+    let activeTrainNum = '20891';
+    let activeRakeModel = 'vb-saffron'; // 'vb-saffron' | 'vb-white' | 'wap7-lhb'
+    let cameraMode = 'cinema';          // Default to 'cinema' (Ultra-Realistic 3/4 Train Profile)
+    let weatherMode = 'dusk';           // 'dusk' | 'rain' | 'twilight'
+    let currentSpeed = 130;             // Smooth physics-interpolated velocity
+    let targetSpeed = 130;              // Target velocity set by throttle or train selection
+    let isBraking = false;
+    let arcFlashIntensity = 0;
+    let wheelRotationAngle = 0;
+
+    // =====================================================================
+    // 2. ULTRA-REALISTIC INDIAN RAILWAYS HTML5 CANVAS ENGINE
+    // =====================================================================
+    const canvas = document.getElementById('real-motion-canvas');
+    const ctx = canvas.getContext('2d');
+    let cw = 850, ch = 340, dpr = 1;
+
+    // World scrolling coordinates & particle systems
+    let worldZ = 0;
+    let oncomingZ = 620;
+    let bokehOrbs = [];
+    let rainStreaks = [];
+    let sparksList = [];
+    let mountainRidges = [];
+
+    function resizeMotionCanvas() {
+      if (!canvas) return;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cw = rect.width;
+      ch = rect.height;
+      canvas.width = cw * dpr;
+      canvas.height = ch * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resizeMotionCanvas);
+
+    // Initialize Parallax Scenery, Bokeh City Lights & Rain Particles
+    function initParticles() {
+      bokehOrbs = Array.from({ length: 42 }, () => ({
+        x: Math.random() * 1200,
+        y: Math.random() * 95 + 10,
+        r: Math.random() * 9 + 3,
+        speedFactor: Math.random() * 0.35 + 0.12,
+        hue: Math.random() > 0.3 ? 35 : 16,
+        alpha: Math.random() * 0.45 + 0.15
+      }));
+
+      rainStreaks = Array.from({ length: 95 }, () => ({
+        x: Math.random() * 1100,
+        y: Math.random() * 360,
+        len: Math.random() * 28 + 16,
+        speed: Math.random() * 13 + 15
+      }));
+
+      mountainRidges = Array.from({ length: 24 }, (_, i) => ({
+        x: i * 90,
+        h: 28 + Math.sin(i * 1.3) * 18 + Math.cos(i * 0.7) * 10
+      }));
+    }
+
+    // Spawn Electric Pantograph or Brake Sparks
+    function spawnSpark(x, y, count, isBrake) {
+      for (let i = 0; i < count; i++) {
+        sparksList.push({
+          x,
+          y,
+          vx: -(Math.random() * 5 + 3.5),
+          vy: isBrake ? -(Math.random() * 2.2 + 0.4) : (Math.random() - 0.3) * 3.5,
+          life: 1.0,
+          color: isBrake ? '#fb923c' : '#fef08a'
+        });
+      }
+    }
+
+    // 3D Perspective Projection Helper (Camera space -> 2D Screen space)
+    function project3D(wx, wy, wz, camX, camY, fov, vpX, vpY) {
+      const safeZ = Math.max(4, wz);
+      const scale = fov / safeZ;
+      return {
+        x: vpX + (wx - camX) * scale,
+        y: vpY - (wy - camY) * scale,
+        scale: scale
+      };
+    }
+
+    // Draw Atmospheric Sky, Distant Mountains & Viaduct Horizon (Zero Blue / Zero Green)
+    function drawSkyAndAtmosphere(horizonY) {
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, horizonY);
+      if (weatherMode === 'dusk') {
+        skyGrad.addColorStop(0, '#070609');
+        skyGrad.addColorStop(0.50, '#191015');
+        skyGrad.addColorStop(0.82, '#3f1814');
+        skyGrad.addColorStop(1, '#852d12');
+      } else if (weatherMode === 'rain') {
+        skyGrad.addColorStop(0, '#050507');
+        skyGrad.addColorStop(0.6, '#111015');
+        skyGrad.addColorStop(1, '#261f23');
+      } else {
+        skyGrad.addColorStop(0, '#050407');
+        skyGrad.addColorStop(0.6, '#180a13');
+        skyGrad.addColorStop(1, '#431022');
+      }
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, cw, horizonY + 2);
+
+      // Warm Setting Sun / Horizon Bloom
+      const sunX = cw * 0.72;
+      const sunGlow = ctx.createRadialGradient(sunX, horizonY - 12, 4, sunX, horizonY - 12, 190);
+      if (weatherMode === 'dusk') {
+        sunGlow.addColorStop(0, 'rgba(254, 240, 138, 0.65)');
+        sunGlow.addColorStop(0.35, 'rgba(249, 115, 22, 0.30)');
+        sunGlow.addColorStop(1, 'rgba(249, 115, 22, 0)');
+      } else if (weatherMode === 'rain') {
+        sunGlow.addColorStop(0, 'rgba(251, 191, 36, 0.18)');
+        sunGlow.addColorStop(1, 'rgba(251, 191, 36, 0)');
+      } else {
+        sunGlow.addColorStop(0, 'rgba(244, 63, 94, 0.42)');
+        sunGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      }
+      ctx.fillStyle = sunGlow;
+      ctx.fillRect(0, 0, cw, horizonY + 30);
+
+      // Parallax Distant Silhouette Mountain Range
+      ctx.fillStyle = '#0e0a0d';
+      ctx.beginPath();
+      ctx.moveTo(0, horizonY);
+      const mShift = (worldZ * 0.12) % 90;
+      for (let i = 0; i < mountainRidges.length; i++) {
+        const mx = i * 90 - mShift;
+        ctx.lineTo(mx, horizonY - mountainRidges[i].h);
+      }
+      ctx.lineTo(cw + 100, horizonY);
+      ctx.closePath();
+      ctx.fill();
+
+      // Distant City & Station Bokeh Lights along Horizon
+      bokehOrbs.forEach(orb => {
+        const bx = ((orb.x - worldZ * orb.speedFactor) % (cw + 100) + (cw + 100)) % (cw + 100) - 50;
+        const by = horizonY - (orb.y * 0.32) - 4;
+        const stretch = cameraMode === 'cinema' ? Math.max(1.2, currentSpeed * 0.16) : 1.5;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = `hsla(${orb.hue}, 95%, 68%, ${orb.alpha})`;
+        ctx.roundRect(bx, by, orb.r * stretch, orb.r * 0.55, orb.r);
+        ctx.fill();
+        ctx.restore();
+      });
+    }
+
+    // =====================================================================
+    // REALISTIC FIAT / LHB BOGIE & WHEELSET RENDERER (Springs, Dampers, Flanges)
+    // =====================================================================
+    function drawRealisticBogie(centerX, railY) {
+      const wheelRadius = 11.5;
+      const wheelY = railY - wheelRadius;
+      const axleOffsets = [-24, 24];
+
+      // 1. Cast-Steel Y-Shaped Bolsterless Bogie Frame
+      ctx.fillStyle = '#1f1f23';
+      ctx.strokeStyle = '#3f3f46';
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.roundRect(centerX - 38, wheelY - 8, 76, 11, 3);
+      ctx.fill();
+      ctx.stroke();
+
+      // Central Secondary Suspension Coil Springs & Vertical Yaw Damper
+      ctx.fillStyle = '#27272a';
+      ctx.fillRect(centerX - 11, wheelY - 11, 22, 13);
+      ctx.strokeStyle = '#71717a';
+      ctx.lineWidth = 1.2;
+      for (let sy = wheelY - 9; sy <= wheelY; sy += 3) {
+        ctx.beginPath();
+        ctx.moveTo(centerX - 8, sy);
+        ctx.lineTo(centerX - 2, sy + 1.5);
+        ctx.moveTo(centerX + 2, sy);
+        ctx.lineTo(centerX + 8, sy + 1.5);
+        ctx.stroke();
+      }
+
+      // 2. Rotating Steel Wheels, Brake Discs & Primary Axle Boxes
+      axleOffsets.forEach(dx => {
+        const wx = centerX + dx;
+
+        // Dark Wheel Shadow on Steel Rail
+        ctx.fillStyle = 'rgba(0,0,0,0.85)';
+        ctx.beginPath();
+        ctx.ellipse(wx, railY, 13, 3, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Outer Machined Steel Wheel Tire / Flange (Bright Specular Rim)
+        const wheelGrad = ctx.createRadialGradient(wx - 2, wheelY - 2, 2, wx, wheelY, wheelRadius);
+        wheelGrad.addColorStop(0, '#52525b');
+        wheelGrad.addColorStop(0.68, '#18181b');
+        wheelGrad.addColorStop(0.86, '#d4d4d8');
+        wheelGrad.addColorStop(1, '#71717a');
+        ctx.fillStyle = wheelGrad;
+        ctx.beginPath();
+        ctx.arc(wx, wheelY, wheelRadius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Rotating Wheel Web / Dynamic Brake Disc Spokes
+        ctx.save();
+        ctx.translate(wx, wheelY);
+        ctx.rotate(wheelRotationAngle);
+        ctx.strokeStyle = isBraking ? '#fb923c' : '#71717a';
+        ctx.lineWidth = 1.5;
+        for (let a = 0; a < 4; a++) {
+          ctx.rotate(Math.PI / 2);
+          ctx.beginPath();
+          ctx.moveTo(2.5, 0);
+          ctx.lineTo(wheelRadius - 3, 0);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // Glowing Ventilated Brake Disc when decelerating
+        if (isBraking || currentSpeed < targetSpeed - 5) {
+          const brkGlow = ctx.createRadialGradient(wx, wheelY, 2, wx, wheelY, 10);
+          brkGlow.addColorStop(0, '#fff7ed');
+          brkGlow.addColorStop(0.5, 'rgba(249, 115, 22, 0.85)');
+          brkGlow.addColorStop(1, 'rgba(225, 29, 72, 0)');
+          ctx.fillStyle = brkGlow;
+          ctx.beginPath();
+          ctx.arc(wx, wheelY, 10, 0, Math.PI * 2);
+          ctx.fill();
+
+          if (currentSpeed > 15 && Math.random() < 0.35) {
+            spawnSpark(wx, railY - 2, 1, true);
+          }
+        }
+
+        // Primary Axle Box Bearing Cap & Helical Spring
+        ctx.fillStyle = '#3f3f46';
+        ctx.beginPath();
+        ctx.roundRect(wx - 5, wheelY - 3.5, 10, 7, 2);
+        ctx.fill();
+        ctx.fillStyle = '#a1a1aa';
+        ctx.beginPath();
+        ctx.arc(wx, wheelY, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Horizontal Yaw Damper Piston
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(centerX - 18, wheelY - 2);
+      ctx.lineTo(centerX + 18, wheelY - 2);
+      ctx.stroke();
+    }
+
+    // =====================================================================
+    // PANTOGRAPH & 25kV OVERHEAD CATENARY WIRE SYSTEM
+    // =====================================================================
+    function drawOverheadCatenaryAndPantograph(pantoX, roofY, contactWireY) {
+      // 1. 25kV Overhead Contact Wire (Level) & Catenary Messenger Wire (Parabolic Sag)
+      ctx.strokeStyle = 'rgba(212, 212, 216, 0.65)';
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(0, contactWireY);
+      ctx.lineTo(cw, contactWireY);
+      ctx.stroke();
+
+      const spanWidth = 260;
+      const spanOffset = (worldZ * 5.2) % spanWidth;
+      ctx.strokeStyle = 'rgba(161, 161, 170, 0.45)';
+      ctx.lineWidth = 1.1;
+      for (let sx = -spanOffset - spanWidth; sx < cw + spanWidth; sx += spanWidth) {
+        // Parabolic Messenger Wire
+        ctx.beginPath();
+        ctx.moveTo(sx, contactWireY - 28);
+        ctx.quadraticCurveTo(sx + spanWidth * 0.5, contactWireY - 6, sx + spanWidth, contactWireY - 28);
+        ctx.stroke();
+
+        // Vertical Dropper Wires
+        for (let d = 0.2; d <= 0.8; d += 0.2) {
+          const dx = sx + spanWidth * d;
+          const sagY = contactWireY - 28 + Math.sin(d * Math.PI) * 18;
+          ctx.beginPath();
+          ctx.moveTo(dx, sagY);
+          ctx.lineTo(dx, contactWireY);
+          ctx.stroke();
+        }
+      }
+
+      // 2. High-Reach Single-Arm Brecknell Willis Pantograph on Train Roof
+      // High-voltage ceramic roof insulators
+      ctx.fillStyle = '#7f1d1d';
+      ctx.fillRect(pantoX - 14, roofY - 5, 5, 5);
+      ctx.fillRect(pantoX + 9, roofY - 5, 5, 5);
+
+      // Pantograph Base Frame
+      ctx.fillStyle = '#52525b';
+      ctx.fillRect(pantoX - 16, roofY - 7, 32, 3);
+
+      // Lower & Upper Articulated Arms (Painted Signal Red / Metallic Grey)
+      const kneeX = pantoX - 18;
+      const kneeY = (roofY - 7 + contactWireY) * 0.52;
+      ctx.strokeStyle = '#dc2626';
+      ctx.lineWidth = 2.6;
+      ctx.beginPath();
+      ctx.moveTo(pantoX + 4, roofY - 7);
+      ctx.lineTo(kneeX, kneeY);
+      ctx.lineTo(pantoX, contactWireY + 2);
+      ctx.stroke();
+
+      // Secondary Stabilizer Rod
+      ctx.strokeStyle = '#a1a1aa';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(pantoX - 4, roofY - 7);
+      ctx.lineTo(kneeX + 4, kneeY - 2);
+      ctx.lineTo(pantoX - 2, contactWireY + 2);
+      ctx.stroke();
+
+      // Carbon Contact Collector Pan Head
+      ctx.strokeStyle = '#e4e4e7';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(pantoX - 11, contactWireY + 1);
+      ctx.lineTo(pantoX + 11, contactWireY + 1);
+      ctx.stroke();
+
+      // Random or Triggered High-Voltage Electric Arc Flash at Contact Point
+      if ((currentSpeed > 35 && Math.random() < 0.06) || arcFlashIntensity > 0.1) {
+        if (arcFlashIntensity < 0.3) arcFlashIntensity = 0.65;
+        spawnSpark(pantoX, contactWireY + 1, 2, false);
+      }
+
+      if (arcFlashIntensity > 0.05) {
+        const arcGrad = ctx.createRadialGradient(pantoX, contactWireY, 1, pantoX, contactWireY, 44 * arcFlashIntensity);
+        arcGrad.addColorStop(0, '#ffffff');
+        arcGrad.addColorStop(0.3, '#fef08a');
+        arcGrad.addColorStop(0.65, 'rgba(245, 158, 11, 0.45)');
+        arcGrad.addColorStop(1, 'rgba(245, 158, 11, 0)');
+        ctx.fillStyle = arcGrad;
+        ctx.beginPath();
+        ctx.arc(pantoX, contactWireY, 44 * arcFlashIntensity, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // =====================================================================
+    // RAKE 1 & 2: BLUEPRINT-ACCURATE VANDE BHARAT EXPRESS (SAFFRON & PEARL)
+    // =====================================================================
+    function drawVandeBharatRake(railY, swayY, isPearlWhite) {
+      const tData = TRAIN_DATABASE[activeTrainNum] || TRAIN_DATABASE['20891'];
+      const bodyTop = railY - 108 + swayY;
+      const bodyBottom = railY - 19 + swayY;
+      const noseTipX = Math.min(cw - 45, Math.max(580, cw * 0.86));
+      const cabStartX = noseTipX - 310;
+      const trailStartX = cabStartX - 335;
+
+      // Color Tokens for Saffron 2.0 vs Pearl White Vande Bharat
+      const mainLiveryTop = isPearlWhite ? '#ffffff' : '#fb923c';
+      const mainLiveryMid = isPearlWhite ? '#f4f4f5' : '#ea580c';
+      const mainLiveryDark = isPearlWhite ? '#d4d4d8' : '#c2410c';
+      const skirtColor = isPearlWhite ? '#27272a' : '#1f242d';
+      const stripeAccent = isPearlWhite ? '#e11d48' : '#ffffff';
+
+      // 1. Draw Bogies & Underframe Equipment FIRST (Tucked realistically beneath body skirt)
+      drawRealisticBogie(trailStartX + 62, railY);
+      drawRealisticBogie(trailStartX + 265, railY);
+      drawRealisticBogie(cabStartX + 62, railY);
+      drawRealisticBogie(cabStartX + 218, railY);
+
+      // Under-slung Transformer, Battery & Air-Dryer Modules between bogies
+      [trailStartX + 115, cabStartX + 108].forEach(ux => {
+        ctx.fillStyle = '#18181b';
+        ctx.strokeStyle = '#3f3f46';
+        ctx.lineWidth = 1;
+        ctx.fillRect(ux, bodyBottom - 4, 88, 11);
+        ctx.strokeRect(ux, bodyBottom - 4, 88, 11);
+        // Cooling Louver Vents
+        ctx.fillStyle = '#27272a';
+        ctx.fillRect(ux + 8, bodyBottom - 2, 26, 7);
+        ctx.fillRect(ux + 44, bodyBottom - 2, 34, 7);
+      });
+
+      // 2. Corrugated Black Rubber Inter-Coach Gangway Bellows
+      const gangwayX = cabStartX - 14;
+      ctx.fillStyle = '#09090b';
+      ctx.fillRect(gangwayX, bodyTop + 4, 15, bodyBottom - bodyTop - 6);
+      ctx.strokeStyle = '#27272a';
+      ctx.lineWidth = 1.5;
+      for (let gx = gangwayX + 3; gx < gangwayX + 14; gx += 3.5) {
+        ctx.beginPath();
+        ctx.moveTo(gx, bodyTop + 4);
+        ctx.lineTo(gx, bodyBottom - 3);
+        ctx.stroke();
+      }
+
+      // 3. TRAILING COACH (Left Coach) — Tumblehome Roof, Flush Windows, Plug Door
+      drawVandeCoachBody(trailStartX, cabStartX - 13, bodyTop, bodyBottom, mainLiveryTop, mainLiveryMid, mainLiveryDark, skirtColor, stripeAccent, false, tData.boardText);
+
+      // 4. AERODYNAMIC DRIVING TRAILER CAB (Right Coach + Sculpted 3/4 Bullet Nose)
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(cabStartX, bodyTop);
+      // Roofline running forward to aerodynamic crown
+      ctx.lineTo(noseTipX - 155, bodyTop);
+      // Blueprint Cubic Bezier Nose Cone Profile (Upper Windshield Slope -> Rounded Nose Tip -> Lower Skirt)
+      ctx.bezierCurveTo(
+        noseTipX - 95, bodyTop,
+        noseTipX - 42, bodyTop + 34,
+        noseTipX - 6, bodyBottom - 26
+      );
+      // Sculpted Bullet Nose Tip
+      ctx.bezierCurveTo(
+        noseTipX + 5, bodyBottom - 18,
+        noseTipX + 2, bodyBottom - 6,
+        noseTipX - 18, bodyBottom
+      );
+      // Lower Aerodynamic Skirt Cutout over Front Bogie
+      ctx.lineTo(cabStartX, bodyBottom);
+      ctx.closePath();
+
+      // Multi-Stop Metallic Body Shading
+      const cabGrad = ctx.createLinearGradient(0, bodyTop, 0, bodyBottom);
+      cabGrad.addColorStop(0, '#ffffff');
+      cabGrad.addColorStop(0.14, '#e4e4e7');
+      cabGrad.addColorStop(0.22, mainLiveryTop);
+      cabGrad.addColorStop(0.66, mainLiveryMid);
+      cabGrad.addColorStop(0.75, mainLiveryDark);
+      cabGrad.addColorStop(0.76, skirtColor);
+      cabGrad.addColorStop(1, '#09090b');
+      ctx.fillStyle = cabGrad;
+      ctx.fill();
+
+      // Clip inside the Driving Cab silhouette for liveries, visor, and nose accents
+      ctx.clip();
+
+      // Lower Charcoal-Grey Aerodynamic Skirt + Diagonal Saffron/Crimson Nose Cheek Sweep
+      ctx.fillStyle = skirtColor;
+      ctx.beginPath();
+      ctx.moveTo(cabStartX, bodyBottom - 20);
+      ctx.lineTo(noseTipX - 90, bodyBottom - 20);
+      ctx.lineTo(noseTipX + 5, bodyBottom - 8);
+      ctx.lineTo(noseTipX + 5, bodyBottom + 5);
+      ctx.lineTo(cabStartX, bodyBottom + 5);
+      ctx.closePath();
+      ctx.fill();
+
+      // Crisp White / Crimson Aerodynamic Speed Stripe & Nose V-Chevron
+      ctx.strokeStyle = stripeAccent;
+      ctx.lineWidth = 3.2;
+      ctx.beginPath();
+      ctx.moveTo(cabStartX, bodyBottom - 20);
+      ctx.lineTo(noseTipX - 88, bodyBottom - 20);
+      ctx.lineTo(noseTipX - 12, bodyBottom - 11);
+      ctx.stroke();
+
+      // 3/4 Perspective Far-Side Front Nose Highlight (Gives True 3D Depth to the Bullet Nose)
+      const nose3DGrad = ctx.createLinearGradient(noseTipX - 95, bodyTop + 10, noseTipX, bodyBottom - 15);
+      nose3DGrad.addColorStop(0, 'rgba(255, 255, 255, 0.55)');
+      nose3DGrad.addColorStop(0.5, 'rgba(254, 243, 199, 0.22)');
+      nose3DGrad.addColorStop(1, 'rgba(0, 0, 0, 0.35)');
+      ctx.fillStyle = nose3DGrad;
+      ctx.beginPath();
+      ctx.moveTo(noseTipX - 140, bodyTop);
+      ctx.bezierCurveTo(noseTipX - 85, bodyTop + 4, noseTipX - 36, bodyTop + 34, noseTipX - 4, bodyBottom - 24);
+      ctx.lineTo(noseTipX - 32, bodyBottom - 22);
+      ctx.quadraticCurveTo(noseTipX - 68, bodyTop + 36, noseTipX - 140, bodyTop + 14);
+      ctx.closePath();
+      ctx.fill();
+
+      // Continuous Smoked-Glass Black Window Band flowing into Wrap-Around Cockpit Visor
+      ctx.fillStyle = '#09090b';
+      ctx.beginPath();
+      ctx.moveTo(cabStartX + 34, bodyTop + 23);
+      ctx.lineTo(noseTipX - 118, bodyTop + 23);
+      ctx.bezierCurveTo(
+        noseTipX - 75, bodyTop + 23,
+        noseTipX - 42, bodyTop + 36,
+        noseTipX - 24, bodyTop + 53
+      );
+      ctx.lineTo(noseTipX - 82, bodyTop + 55);
+      ctx.lineTo(cabStartX + 34, bodyTop + 51);
+      ctx.closePath();
+      ctx.fill();
+
+      // 3D Wrap-Around Front Driver Windshield Glass (Visible on the 3/4 Nose Slope)
+      const windshieldGrad = ctx.createLinearGradient(noseTipX - 105, bodyTop + 18, noseTipX - 28, bodyTop + 52);
+      windshieldGrad.addColorStop(0, '#18181b');
+      windshieldGrad.addColorStop(0.45, '#27272a');
+      windshieldGrad.addColorStop(0.75, '#52525b');
+      windshieldGrad.addColorStop(1, '#09090b');
+      ctx.fillStyle = windshieldGrad;
+      ctx.beginPath();
+      ctx.moveTo(noseTipX - 102, bodyTop + 19);
+      ctx.bezierCurveTo(noseTipX - 68, bodyTop + 21, noseTipX - 38, bodyTop + 36, noseTipX - 24, bodyTop + 51);
+      ctx.lineTo(noseTipX - 62, bodyTop + 52);
+      ctx.quadraticCurveTo(noseTipX - 78, bodyTop + 35, noseTipX - 102, bodyTop + 19);
+      ctx.closePath();
+      ctx.fill();
+
+      // Dual Pantograph Windshield Wipers on Front Cab Glass
+      ctx.strokeStyle = '#a1a1aa';
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(noseTipX - 45, bodyTop + 49);
+      ctx.lineTo(noseTipX - 68, bodyTop + 29);
+      ctx.moveTo(noseTipX - 34, bodyTop + 48);
+      ctx.lineTo(noseTipX - 54, bodyTop + 28);
+      ctx.stroke();
+
+      // Driver Cab Side Window (Illuminated Console Glow + Driver Silhouette)
+      ctx.fillStyle = '#1e1b18';
+      ctx.beginPath();
+      ctx.roundRect(noseTipX - 122, bodyTop + 26, 36, 22, 4);
+      ctx.fill();
+      // Driver Silhouette & Glowing Cab Screen
+      ctx.fillStyle = '#fbbf24';
+      ctx.fillRect(noseTipX - 96, bodyTop + 38, 6, 4);
+      ctx.fillStyle = '#09090b';
+      ctx.beginPath();
+      ctx.arc(noseTipX - 106, bodyTop + 35, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Render Passenger Cabin Windows with Seats, Headrests & Sliding Glass Reflections
+      drawPassengerWindows(cabStartX + 42, noseTipX - 135, bodyTop + 26);
+
+      // Glowing Amber LED Destination Matrix Board on Driving Coach
+      drawDestinationBoard(cabStartX + 42, bodyTop + 15, tData.boardText);
+
+      // Automatic Sliding Plug Door at Left End of Driving Coach
+      drawAutomaticPlugDoor(cabStartX + 8, bodyTop + 18, bodyBottom - 21);
+
+      // Tri-Element Projector LED Headlight Cluster + Red Marker Light on Nose
+      const hlX = noseTipX - 22;
+      const hlY = bodyBottom - 30;
+      ctx.fillStyle = '#09090b';
+      ctx.beginPath();
+      ctx.ellipse(hlX, hlY, 11, 5.5, 0.32, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#e4e4e7';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // 3 Individual LED Projector Lenses
+      [-5, 0, 5].forEach(lx => {
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(hlX + lx, hlY + lx * 0.25, 2.1, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      // Red Marker Lamp dot
+      ctx.fillStyle = '#f43f5e';
+      ctx.beginPath();
+      ctx.arc(hlX - 8, hlY - 1, 1.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Nose Coupler Hatch Seam Line & Heavy Steel Cowcatcher / Rail Guard
+      ctx.strokeStyle = 'rgba(0,0,0,0.55)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.arc(noseTipX - 8, bodyBottom - 12, 10, Math.PI * 0.6, Math.PI * 1.35);
+      ctx.stroke();
+
+      ctx.restore();
+
+      // 5. Aerodynamic Roof HVAC Pods & High-Voltage Pantograph
+      ctx.fillStyle = '#a1a1aa';
+      ctx.beginPath();
+      ctx.roundRect(cabStartX + 95, bodyTop - 4, 72, 4, 2);
+      ctx.roundRect(trailStartX + 110, bodyTop - 4, 72, 4, 2);
+      ctx.fill();
+
+      drawOverheadCatenaryAndPantograph(trailStartX + 235, bodyTop, bodyTop - 44 - swayY);
+
+      // 6. Volumetric Dual LED Headlight Beam Projecting Ahead onto Rails
+      drawHeadlightCone(noseTipX - 14, bodyBottom - 29, railY);
+    }
+
+    // Helper: Draw Trailing Coach Body with Tumblehome Roof, Windows, LED Board & Plug Doors
+    function drawVandeCoachBody(x1, x2, bodyTop, bodyBottom, topCol, midCol, darkCol, skirtCol, stripeCol, isLHB, boardText) {
+      const width = x2 - x1;
+      ctx.save();
+      ctx.beginPath();
+      ctx.roundRect(x1, bodyTop, width, bodyBottom - bodyTop, 3);
+      ctx.clip();
+
+      const grad = ctx.createLinearGradient(0, bodyTop, 0, bodyBottom);
+      grad.addColorStop(0, '#ffffff');
+      grad.addColorStop(0.14, '#d4d4d8');
+      grad.addColorStop(0.22, topCol);
+      grad.addColorStop(0.66, midCol);
+      grad.addColorStop(0.75, darkCol);
+      grad.addColorStop(0.76, skirtCol);
+      grad.addColorStop(1, '#09090b');
+      ctx.fillStyle = grad;
+      ctx.fillRect(x1, bodyTop, width, bodyBottom - bodyTop);
+
+      // Waistline Speed Stripe
+      ctx.fillStyle = stripeCol;
+      ctx.fillRect(x1, bodyBottom - 21, width, 3);
+
+      // Continuous Black Panoramic Window Band (for Vande Bharat)
+      if (!isLHB) {
+        ctx.fillStyle = '#09090b';
+        ctx.fillRect(x1 + 34, bodyTop + 23, width - 68, 28);
+      }
+
+      // Automatic Plug Doors at Both Ends
+      drawAutomaticPlugDoor(x1 + 8, bodyTop + 18, bodyBottom - 21);
+      drawAutomaticPlugDoor(x2 - 30, bodyTop + 18, bodyBottom - 21);
+
+      // Passenger Windows with Interior Seats & Dynamic Reflections
+      drawPassengerWindows(x1 + 40, x2 - 38, bodyTop + 26);
+
+      // Glowing Amber LED Destination Board
+      drawDestinationBoard(x1 + 42, bodyTop + 15, boardText);
+
+      ctx.restore();
+    }
+
+    // Helper: Draw Flush Passenger Windows with Interior Seats, Headrests & Sliding Glass Reflections
+    function drawPassengerWindows(startX, endX, winY) {
+      const winW = 42;
+      const winH = 21;
+      const gap = 8;
+      const reflectPos = (worldZ * 7.5) % 220;
+
+      for (let wx = startX; wx + winW <= endX; wx += winW + gap) {
+        // Warm Cabin Interior Ceiling Glow
+        const intGrad = ctx.createLinearGradient(wx, winY, wx, winY + winH);
+        intGrad.addColorStop(0, '#fef3c7');
+        intGrad.addColorStop(0.45, '#fde68a');
+        intGrad.addColorStop(1, '#78350f');
+        ctx.fillStyle = intGrad;
+        ctx.beginPath();
+        ctx.roundRect(wx, winY, winW, winH, 3.5);
+        ctx.fill();
+
+        // Interior Executive Seatbacks, Headrests & Occasional Passenger Silhouettes
+        for (let sx = wx + 6; sx < wx + winW - 5; sx += 12) {
+          // Seat Backrest
+          ctx.fillStyle = '#451a03';
+          ctx.beginPath();
+          ctx.roundRect(sx, winY + 9, 7, 12, 1.5);
+          ctx.fill();
+          // White Antimacassar Headrest Cover
+          ctx.fillStyle = '#fef3c7';
+          ctx.fillRect(sx + 1, winY + 9, 5, 2.5);
+
+          // Passenger Head & Shoulder Silhouette on alternating seats
+          if ((Math.floor(sx) % 24) < 12) {
+            ctx.fillStyle = '#1c1917';
+            ctx.beginPath();
+            ctx.arc(sx + 3.5, winY + 6.5, 2.6, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        // Smoked Tinted Exterior Glass Overlay
+        ctx.fillStyle = 'rgba(9, 9, 11, 0.26)';
+        ctx.beginPath();
+        ctx.roundRect(wx, winY, winW, winH, 3.5);
+        ctx.fill();
+
+        // Sliding Diagonal Specular Sky Reflection across Window Glass
+        const localRef = ((wx - reflectPos) % 180 + 180) % 180;
+        if (localRef < 45) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.roundRect(wx, winY, winW, winH, 3.5);
+          ctx.clip();
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.38)';
+          ctx.beginPath();
+          ctx.moveTo(wx + localRef - 12, winY);
+          ctx.lineTo(wx + localRef + 4, winY);
+          ctx.lineTo(wx + localRef - 8, winY + winH);
+          ctx.lineTo(wx + localRef - 24, winY + winH);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        }
+
+        // Metallic Window Frame Seal
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(wx, winY, winW, winH, 3.5);
+        ctx.stroke();
+      }
+    }
+
+    // Helper: Draw Glowing Amber LED Coach Destination Matrix Board
+    function drawDestinationBoard(x, y, text) {
+      ctx.fillStyle = '#09090b';
+      ctx.fillRect(x, y, 92, 6.5);
+      ctx.strokeStyle = '#3f3f46';
+      ctx.lineWidth = 0.8;
+      ctx.strokeRect(x, y, 92, 6.5);
+
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 4.8px "JetBrains Mono", monospace';
+      ctx.fillText(text.substring(0, 26), x + 3, y + 4.8);
+    }
+
+    // Helper: Draw Automatic Plug Door with Rubber Seals, Window & Status LED
+    function drawAutomaticPlugDoor(x, y, h) {
+      ctx.fillStyle = 'rgba(9, 9, 11, 0.18)';
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.65)';
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.roundRect(x, y, 21, h, 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Door Observation Window
+      ctx.fillStyle = '#18181b';
+      ctx.beginPath();
+      ctx.roundRect(x + 4, y + 6, 13, 19, 2);
+      ctx.fill();
+      ctx.strokeStyle = '#a1a1aa';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+
+      // Amber Door Locked Status Indicator LED
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(x + 10.5, y + 2.8, 1.3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Helper: Draw Volumetric Headlight Beam & Rail Specular Reflection
+    function drawHeadlightCone(hlX, hlY, railY) {
+      const coneGrad = ctx.createLinearGradient(hlX, hlY, cw + 60, hlY + 20);
+      coneGrad.addColorStop(0, 'rgba(255, 255, 255, 0.85)');
+      coneGrad.addColorStop(0.18, 'rgba(254, 240, 138, 0.48)');
+      coneGrad.addColorStop(0.65, 'rgba(245, 158, 11, 0.14)');
+      coneGrad.addColorStop(1, 'rgba(245, 158, 11, 0)');
+
+      ctx.fillStyle = coneGrad;
+      ctx.beginPath();
+      ctx.moveTo(hlX, hlY - 3);
+      ctx.lineTo(cw + 80, hlY - 58);
+      ctx.lineTo(cw + 80, railY + 8);
+      ctx.lineTo(hlX, hlY + 5);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // =====================================================================
+    // RAKE 3: INDIAN RAILWAYS WAP-7 ELECTRIC LOCOMOTIVE + LHB RAJDHANI COACHES
+    // =====================================================================
+    function drawWAP7AndLHBCoaches(railY, swayY) {
+      const tData = TRAIN_DATABASE[activeTrainNum] || TRAIN_DATABASE['12050'];
+      const bodyTop = railY - 110 + swayY;
+      const bodyBottom = railY - 20 + swayY;
+      const locoFrontX = Math.min(cw - 55, Math.max(580, cw * 0.85));
+      const locoRearX = locoFrontX - 245;
+      const lhbStartX = locoRearX - 360;
+
+      // 1. Draw Co-Co 3-Axle Heavy Locomotive Bogies & LHB Fiat Bogies
+      drawRealisticBogie(lhbStartX + 58, railY);
+      drawRealisticBogie(lhbStartX + 285, railY);
+      drawRealisticBogie(locoRearX + 52, railY);
+      drawRealisticBogie(locoFrontX - 62, railY);
+
+      // Heavy Underframe Battery & Main Transformer Tank on WAP-7
+      ctx.fillStyle = '#18181b';
+      ctx.fillRect(locoRearX + 92, bodyBottom - 3, 62, 13);
+
+      // 2. Trailing LHB AC Coach (Classic Rajdhani Crimson Red & Brushed Silver Skirt)
+      drawVandeCoachBody(
+        lhbStartX,
+        locoRearX - 12,
+        bodyTop + 2,
+        bodyBottom,
+        '#e11d48',
+        '#be123c',
+        '#881337',
+        '#d4d4d8',
+        '#ffffff',
+        true,
+        tData.boardText
+      );
+
+      // Inter-Coach Coupler between WAP-7 and LHB Coach
+      ctx.fillStyle = '#27272a';
+      ctx.fillRect(locoRearX - 12, bodyBottom - 14, 12, 8);
+
+      // 3. WAP-7 6000HP ELECTRIC LOCOMOTIVE BODY (White, Royal Red Waistband, Grey Skirt)
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(locoRearX, bodyTop);
+      ctx.lineTo(locoFrontX - 14, bodyTop);
+      // Slight 3/4 Slanted Front Cab Face of WAP-7
+      ctx.lineTo(locoFrontX, bodyTop + 34);
+      ctx.lineTo(locoFrontX, bodyBottom);
+      ctx.lineTo(locoRearX, bodyBottom);
+      ctx.closePath();
+
+      const wapGrad = ctx.createLinearGradient(0, bodyTop, 0, bodyBottom);
+      wapGrad.addColorStop(0, '#d4d4d8');
+      wapGrad.addColorStop(0.14, '#ffffff');
+      wapGrad.addColorStop(0.56, '#f4f4f5');
+      wapGrad.addColorStop(0.57, '#dc2626'); // Classic WAP-7 Red Band
+      wapGrad.addColorStop(0.74, '#b91c1c');
+      wapGrad.addColorStop(0.75, '#3f3f46'); // Grey Underframe Skirt
+      wapGrad.addColorStop(1, '#18181b');
+      ctx.fillStyle = wapGrad;
+      ctx.fill();
+      ctx.clip();
+
+      // 3/4 Perspective Front Face of WAP-7 (Twin Windshields, Sun Visors, Headcode Board)
+      ctx.fillStyle = '#e4e4e7';
+      ctx.fillRect(locoFrontX - 24, bodyTop, 24, bodyBottom - bodyTop);
+      ctx.fillStyle = '#dc2626';
+      ctx.fillRect(locoFrontX - 24, bodyTop + 50, 24, 16);
+
+      // Twin Front Windshields with Black Rubber Gaskets & Sun Visors
+      ctx.fillStyle = '#09090b';
+      ctx.fillRect(locoFrontX - 21, bodyTop + 20, 9, 16);
+      ctx.fillRect(locoFrontX - 10, bodyTop + 20, 8, 16);
+
+      // Locomotive Side Cab Windows (Left & Right Cab Doors)
+      ctx.fillStyle = '#18181b';
+      ctx.fillRect(locoFrontX - 52, bodyTop + 20, 20, 18);
+      ctx.fillRect(locoRearX + 18, bodyTop + 20, 20, 18);
+
+      // Machine Room Cooling Louvers & Porthole Windows along WAP-7 Side Wall
+      ctx.fillStyle = '#52525b';
+      for (let lx = locoRearX + 52; lx < locoFrontX - 68; lx += 28) {
+        ctx.fillRect(lx, bodyTop + 22, 20, 14);
+        // Horizontal louver slats
+        ctx.strokeStyle = '#27272a';
+        ctx.lineWidth = 1;
+        for (let ly = bodyTop + 24; ly < bodyTop + 35; ly += 3) {
+          ctx.beginPath();
+          ctx.moveTo(lx, ly);
+          ctx.lineTo(lx + 20, ly);
+          ctx.stroke();
+        }
+      }
+
+      // Official "INDIAN RAILWAYS" & "WAP-7 30294" Number Plate
+      ctx.fillStyle = '#fef08a';
+      ctx.font = 'bold 6.5px "JetBrains Mono", monospace';
+      ctx.fillText('WAP-7 • 30294', locoRearX + 88, bodyTop + 61);
+
+      // Twin High-Intensity Front Headlights + Roof Flasher Light
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(locoFrontX - 6, bodyBottom - 26, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(locoFrontX - 14, bodyTop + 10, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+
+      // Slanted Red/Yellow Steel Cowcatcher & Central CBC Coupler under WAP-7 Nose
+      ctx.fillStyle = '#dc2626';
+      ctx.beginPath();
+      ctx.moveTo(locoFrontX - 18, bodyBottom);
+      ctx.lineTo(locoFrontX + 6, bodyBottom);
+      ctx.lineTo(locoFrontX + 14, railY - 4);
+      ctx.lineTo(locoFrontX - 18, railY - 4);
+      ctx.closePath();
+      ctx.fill();
+
+      // Yellow Hazard Stripes on Cowcatcher
+      ctx.strokeStyle = '#facc15';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(locoFrontX - 8, bodyBottom + 2);
+      ctx.lineTo(locoFrontX, railY - 4);
+      ctx.moveTo(locoFrontX, bodyBottom + 2);
+      ctx.lineTo(locoFrontX + 8, railY - 4);
+      ctx.stroke();
+
+      // Pantograph & Headlight Cone
+      drawOverheadCatenaryAndPantograph(locoRearX + 55, bodyTop, bodyTop - 42 - swayY);
+      drawHeadlightCone(locoFrontX - 4, bodyBottom - 26, railY);
+    }
+
+    // =====================================================================
+    // CAMERA MODE 1 (DEFAULT): REAL TRAIN 3/4 CINEMA TRACKING
+    // =====================================================================
+    function renderCinemaPan(dt) {
+      const horizonY = ch * 0.56;
+      const railY = ch - 38;
+      drawSkyAndAtmosphere(horizonY);
+
+      // 1. Trackbed Embankment & Crushed Granite Ballast Layer
+      const ballastGrad = ctx.createLinearGradient(0, horizonY, 0, ch);
+      ballastGrad.addColorStop(0, '#161316');
+      ballastGrad.addColorStop(0.55, '#1d191c');
+      ballastGrad.addColorStop(1, '#09080a');
+      ctx.fillStyle = ballastGrad;
+      ctx.fillRect(0, horizonY, cw, ch - horizonY);
+
+      // High-Speed Scrolling Concrete Monoblock Sleepers & Pandrol Rail Clips
+      const sleeperSpacing = 28;
+      const tieOffset = (worldZ * 5.2) % sleeperSpacing;
+      for (let x = -tieOffset; x < cw + sleeperSpacing; x += sleeperSpacing) {
+        // Concrete Sleeper
+        ctx.fillStyle = '#3f3f46';
+        ctx.fillRect(x, railY + 2, 16, 6);
+        // Iron Pandrol Fastening Clip
+        ctx.fillStyle = '#18181b';
+        ctx.fillRect(x + 4, railY, 8, 3);
+      }
+
+      // Crushed Ballast Texture Specks Moving at Ground Speed
+      const speckOffset = (worldZ * 5.2) % 44;
+      ctx.fillStyle = 'rgba(161, 161, 170, 0.25)';
+      for (let x = -speckOffset; x < cw; x += 22) {
+        ctx.fillRect(x, railY + 10, 3, 2);
+        ctx.fillRect(x + 11, railY + 16, 4, 2);
+      }
+
+      // Gleaming Continuous Welded Steel Rail with Headlight Specular Highlight
+      const railGrad = ctx.createLinearGradient(0, railY - 3, cw, railY - 3);
+      railGrad.addColorStop(0, '#71717a');
+      railGrad.addColorStop(0.75, '#d4d4d8');
+      railGrad.addColorStop(1, '#fef08a');
+      ctx.fillStyle = railGrad;
+      ctx.fillRect(0, railY - 3, cw, 3.5);
+      ctx.fillStyle = '#27272a';
+      ctx.fillRect(0, railY + 0.5, cw, 2.5);
+
+      // 2. Harmonic Suspension Bounce & Rail-Joint Micro-Vibration
+      const speedRatio = Math.min(1.2, currentSpeed / 130);
+      const swayY = (Math.sin(worldZ * 0.065) * 1.1 + Math.cos(worldZ * 0.22) * 0.35) * speedRatio;
+
+      // 3. Render Selected Authentic Indian Railways Rake
+      if (activeRakeModel === 'wap7-lhb') {
+        drawWAP7AndLHBCoaches(railY, swayY);
+      } else if (activeRakeModel === 'vb-white') {
+        drawVandeBharatRake(railY, swayY, true);
+      } else {
+        drawVandeBharatRake(railY, swayY, false);
+      }
+
+      // 4. Render Active Sparks (Pantograph Arcs & Friction Brake Sparks)
+      for (let i = sparksList.length - 1; i >= 0; i--) {
+        const sp = sparksList[i];
+        sp.x += sp.vx;
+        sp.y += sp.vy;
+        sp.vy += 0.18;
+        sp.life -= dt * 2.6;
+        if (sp.life <= 0) {
+          sparksList.splice(i, 1);
+          continue;
+        }
+        ctx.strokeStyle = sp.color;
+        ctx.globalAlpha = Math.max(0, sp.life);
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(sp.x, sp.y);
+        ctx.lineTo(sp.x - sp.vx * 1.8, sp.y - sp.vy * 1.8);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      // 5. Trackside Kilometer Post & Foreground Catenary H-Beam Mast Whipping Past Camera
+      const kmPostX = cw - ((worldZ * 5.2) % (cw + 650));
+      if (kmPostX > -60 && kmPostX < cw + 60) {
+        ctx.fillStyle = '#facc15';
+        ctx.fillRect(kmPostX, railY - 26, 22, 14);
+        ctx.fillStyle = '#18181b';
+        ctx.fillRect(kmPostX + 8, railY - 12, 6, 14);
+        ctx.font = 'bold 6px "JetBrains Mono", monospace';
+        ctx.fillText('248/4', kmPostX + 2, railY - 17);
+      }
+
+      const mastX = cw - ((worldZ * 8.8) % (cw + 480));
+      if (mastX > -80 && mastX < cw + 80) {
+        const blurGrad = ctx.createLinearGradient(mastX - 18, 0, mastX + 18, 0);
+        blurGrad.addColorStop(0, 'rgba(24, 24, 27, 0)');
+        blurGrad.addColorStop(0.5, 'rgba(63, 63, 70, 0.72)');
+        blurGrad.addColorStop(1, 'rgba(24, 24, 27, 0)');
+        ctx.fillStyle = blurGrad;
+        ctx.fillRect(mastX - 18, 0, 36, ch);
+      }
+    }
+
+    // =====================================================================
+    // CAMERA MODE 2: 3D ANGLED CORRIDOR CHASE CAM (Multi-Slice Sculpted Nose)
+    // =====================================================================
+    function renderChaseCam(dt) {
+      const shakeX = currentSpeed > 135 ? (Math.random() - 0.5) * 0.9 : 0;
+      const shakeY = currentSpeed > 135 ? (Math.random() - 0.5) * 0.7 : 0;
+      const vpX = cw * 0.28 + shakeX;
+      const vpY = ch * 0.42 + shakeY;
+      const fov = 310;
+      const camX = -88;
+      const camY = 58;
+
+      drawSkyAndAtmosphere(vpY);
+
+      const groundGrad = ctx.createLinearGradient(0, vpY, 0, ch);
+      groundGrad.addColorStop(0, '#141113');
+      groundGrad.addColorStop(0.4, '#0e0c0e');
+      groundGrad.addColorStop(1, '#070608');
+      ctx.fillStyle = groundGrad;
+      ctx.fillRect(0, vpY, cw, ch - vpY);
+
+      // 3D Sleepers on Dual Tracks
+      const sleeperSpacing = 18;
+      const zOffset = worldZ % sleeperSpacing;
+      for (let z = 520 - zOffset; z >= 14; z -= sleeperSpacing) {
+        const fade = Math.min(1, Math.max(0, (520 - z) / 380));
+        const p1 = project3D(-28, 0, z, camX, camY, fov, vpX, vpY);
+        const p2 = project3D(28, 0, z, camX, camY, fov, vpX, vpY);
+        ctx.strokeStyle = `rgba(92, 85, 88, ${fade * 0.75})`;
+        ctx.lineWidth = Math.max(1, 3.6 * p1.scale);
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+
+        const a1 = project3D(-135, 0, z, camX, camY, fov, vpX, vpY);
+        const a2 = project3D(-85, 0, z, camX, camY, fov, vpX, vpY);
+        ctx.strokeStyle = `rgba(63, 58, 60, ${fade * 0.55})`;
+        ctx.beginPath();
+        ctx.moveTo(a1.x, a1.y);
+        ctx.lineTo(a2.x, a2.y);
+        ctx.stroke();
+      }
+
+      // 4 Continuous Specular Steel Rails
+      [-124, -96, -18, 18].forEach((rx, idx) => {
+        const near = project3D(rx, 0, 8, camX, camY, fov, vpX, vpY);
+        const far = project3D(rx, 0, 600, camX, camY, fov, vpX, vpY);
+        ctx.strokeStyle = idx >= 2 ? '#fde047' : 'rgba(161, 161, 170, 0.55)';
+        ctx.lineWidth = idx >= 2 ? 2.6 : 1.6;
+        ctx.beginPath();
+        ctx.moveTo(far.x, far.y);
+        ctx.lineTo(near.x, near.y);
+        ctx.stroke();
+      });
+
+      // Smooth 24-Slice 3D Lofted High-Speed Train Body & Bullet Nose
+      draw3DPerspectiveTrain(camX, camY, fov, vpX, vpY);
+
+      // 3D Overhead Catenary Portals
+      const portalSpacing = 125;
+      const pOffset = worldZ % portalSpacing;
+      for (let z = 600 - pOffset; z >= 12; z -= portalSpacing) {
+        const alpha = Math.min(1, (600 - z) / 250);
+        const baseL = project3D(-155, 0, z, camX, camY, fov, vpX, vpY);
+        const topL = project3D(-155, 108, z, camX, camY, fov, vpX, vpY);
+        const baseR = project3D(52, 0, z, camX, camY, fov, vpX, vpY);
+        const topR = project3D(52, 108, z, camX, camY, fov, vpX, vpY);
+
+        ctx.strokeStyle = `rgba(113, 113, 122, ${alpha * 0.75})`;
+        ctx.lineWidth = Math.max(1.2, 4.5 * baseL.scale);
+        ctx.beginPath();
+        ctx.moveTo(baseL.x, baseL.y);
+        ctx.lineTo(topL.x, topL.y);
+        ctx.lineTo(topR.x, topR.y);
+        ctx.lineTo(baseR.x, baseR.y);
+        ctx.stroke();
+
+        if (Math.abs(z - 98) < 9 && currentSpeed > 25) {
+          arcFlashIntensity = 0.9;
+        }
+      }
+    }
+
+    // Helper: Smooth 3D Lofted High-Speed Train in Perspective
+    function draw3DPerspectiveTrain(camX, camY, fov, vpX, vpY) {
+      const swayY = Math.sin(worldZ * 0.04) * 0.6;
+      const mainColor = activeRakeModel === 'vb-white' ? '#f4f4f5' : activeRakeModel === 'wap7-lhb' ? '#dc2626' : '#ea580c';
+      const zFrontCab = 92;
+      const zNoseTip = 62;
+      const zTail = 420;
+
+      // Render Coach Body from zTail to zFrontCab
+      const flB = project3D(-22, 7 + swayY, zFrontCab, camX, camY, fov, vpX, vpY);
+      const flT = project3D(-19, 56 + swayY, zFrontCab, camX, camY, fov, vpX, vpY);
+      const frB = project3D(22, 7 + swayY, zFrontCab, camX, camY, fov, vpX, vpY);
+      const frT = project3D(19, 56 + swayY, zFrontCab, camX, camY, fov, vpX, vpY);
+      const rlB = project3D(-22, 7, zTail, camX, camY, fov, vpX, vpY);
+      const rlT = project3D(-19, 56, zTail, camX, camY, fov, vpX, vpY);
+      const rrT = project3D(19, 56, zTail, camX, camY, fov, vpX, vpY);
+      const noseTip = project3D(0, 14 + swayY, zNoseTip, camX, camY, fov, vpX, vpY);
+
+      // Side Wall with Tumblehome Gradient
+      const sideGrad = ctx.createLinearGradient(flT.x, flT.y, flB.x, flB.y);
+      sideGrad.addColorStop(0, '#ffffff');
+      sideGrad.addColorStop(0.25, mainColor);
+      sideGrad.addColorStop(0.75, mainColor);
+      sideGrad.addColorStop(0.78, '#27272a');
+      sideGrad.addColorStop(1, '#09090b');
+      ctx.fillStyle = sideGrad;
+      ctx.beginPath();
+      ctx.moveTo(rlT.x, rlT.y);
+      ctx.lineTo(flT.x, flT.y);
+      ctx.lineTo(flB.x, flB.y);
+      ctx.lineTo(rlB.x, rlB.y);
+      ctx.closePath();
+      ctx.fill();
+
+      // Roof Metallic Fairing
+      ctx.fillStyle = '#d4d4d8';
+      ctx.beginPath();
+      ctx.moveTo(rlT.x, rlT.y);
+      ctx.lineTo(rrT.x, rrT.y);
+      ctx.lineTo(frT.x, frT.y);
+      ctx.lineTo(flT.x, flT.y);
+      ctx.closePath();
+      ctx.fill();
+
+      // Illuminated Cabin Windows along 3D Side Wall
+      for (let wz = zFrontCab + 14; wz < zTail - 16; wz += 18) {
+        const w1 = project3D(-21.5, 42 + swayY, wz, camX, camY, fov, vpX, vpY);
+        const w2 = project3D(-21.5, 42 + swayY, wz + 12, camX, camY, fov, vpX, vpY);
+        const w3 = project3D(-21.5, 28 + swayY, wz + 12, camX, camY, fov, vpX, vpY);
+        const w4 = project3D(-21.5, 28 + swayY, wz, camX, camY, fov, vpX, vpY);
+        ctx.fillStyle = '#fde68a';
+        ctx.beginPath();
+        ctx.moveTo(w1.x, w1.y);
+        ctx.lineTo(w2.x, w2.y);
+        ctx.lineTo(w3.x, w3.y);
+        ctx.lineTo(w4.x, w4.y);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Smooth 20-Slice Lofted Aerodynamic Nose Cone
+      const slices = 20;
+      for (let i = 0; i < slices; i++) {
+        const t1 = i / slices;
+        const t2 = (i + 1) / slices;
+        const z1 = zFrontCab - t1 * (zFrontCab - zNoseTip);
+        const z2 = zFrontCab - t2 * (zFrontCab - zNoseTip);
+
+        const w1 = 22 * Math.cos(t1 * Math.PI * 0.46);
+        const w2 = 22 * Math.cos(t2 * Math.PI * 0.46);
+        const h1 = 56 - Math.pow(t1, 1.55) * 40;
+        const h2 = 56 - Math.pow(t2, 1.55) * 40;
+
+        const p1L = project3D(-w1, 7 + swayY, z1, camX, camY, fov, vpX, vpY);
+        const p1T = project3D(0, h1 + swayY, z1, camX, camY, fov, vpX, vpY);
+        const p1R = project3D(w1, 7 + swayY, z1, camX, camY, fov, vpX, vpY);
+        const p2L = project3D(-w2, 7 + swayY, z2, camX, camY, fov, vpX, vpY);
+        const p2T = project3D(0, h2 + swayY, z2, camX, camY, fov, vpX, vpY);
+        const p2R = project3D(w2, 7 + swayY, z2, camX, camY, fov, vpX, vpY);
+
+        // Dark Visor Band on Slices 4 to 10
+        const isVisor = i >= 4 && i <= 10;
+        ctx.fillStyle = isVisor ? '#09090b' : (i > 14 ? '#27272a' : mainColor);
+        ctx.beginPath();
+        ctx.moveTo(p1L.x, p1L.y);
+        ctx.quadraticCurveTo(p1T.x, p1T.y - 8 * p1T.scale, p1R.x, p1R.y);
+        ctx.lineTo(p2R.x, p2R.y);
+        ctx.quadraticCurveTo(p2T.x, p2T.y - 8 * p2T.scale, p2L.x, p2L.y);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Dual Projector Headlights & Volumetric Beam
+      const hlLeft = project3D(-11, 19 + swayY, zNoseTip + 5, camX, camY, fov, vpX, vpY);
+      const hlRight = project3D(11, 19 + swayY, zNoseTip + 5, camX, camY, fov, vpX, vpY);
+      const beamL = project3D(-45, 0, 12, camX, camY, fov, vpX, vpY);
+      const beamR = project3D(65, 0, 12, camX, camY, fov, vpX, vpY);
+
+      const coneGrad = ctx.createLinearGradient(noseTip.x, noseTip.y, (beamL.x + beamR.x) * 0.5, ch);
+      coneGrad.addColorStop(0, 'rgba(254, 243, 199, 0.55)');
+      coneGrad.addColorStop(0.5, 'rgba(245, 158, 11, 0.16)');
+      coneGrad.addColorStop(1, 'rgba(245, 158, 11, 0)');
+      ctx.fillStyle = coneGrad;
+      ctx.beginPath();
+      ctx.moveTo(hlLeft.x, hlLeft.y);
+      ctx.lineTo(hlRight.x, hlRight.y);
+      ctx.lineTo(beamR.x, beamR.y);
+      ctx.lineTo(beamL.x, beamL.y);
+      ctx.closePath();
+      ctx.fill();
+
+      [hlLeft, hlRight].forEach(hl => {
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(hl.x, hl.y, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    // =====================================================================
+    // CAMERA MODE 3: LOCOMOTIVE CAB DESK POV (Driver Console + Wiper + KAVACH)
+    // =====================================================================
+    function renderCockpitPOV(dt) {
+      const vpX = cw * 0.50;
+      const vpY = ch * 0.44;
+      const fov = 310;
+      const camX = 0;
+      const camY = 48;
+
+      drawSkyAndAtmosphere(vpY);
+
+      ctx.fillStyle = '#0c0a0c';
+      ctx.fillRect(0, vpY, cw, ch - vpY);
+
+      // 3D Sleepers & Dual Rails Rushing Under Cab
+      const sleeperSpacing = 16;
+      const zOffset = worldZ % sleeperSpacing;
+      for (let z = 500 - zOffset; z >= 10; z -= sleeperSpacing) {
+        const p1 = project3D(-28, 0, z, camX, camY, fov, vpX, vpY);
+        const p2 = project3D(28, 0, z, camX, camY, fov, vpX, vpY);
+        const alpha = Math.min(1, (500 - z) / 350);
+        ctx.strokeStyle = `rgba(113, 113, 122, ${alpha * 0.7})`;
+        ctx.lineWidth = Math.max(1, 3.5 * p1.scale);
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+
+      [-18, 18].forEach(rx => {
+        const near = project3D(rx, 0, 6, camX, camY, fov, vpX, vpY);
+        const far = project3D(rx, 0, 550, camX, camY, fov, vpX, vpY);
+        ctx.strokeStyle = '#fde047';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(far.x, far.y);
+        ctx.lineTo(near.x, near.y);
+        ctx.stroke();
+      });
+
+      // Overhead Catenary Portals
+      const portalSpacing = 110;
+      const pOffset = worldZ % portalSpacing;
+      for (let z = 550 - pOffset; z >= 10; z -= portalSpacing) {
+        const bL = project3D(-65, 0, z, camX, camY, fov, vpX, vpY);
+        const tL = project3D(-65, 95, z, camX, camY, fov, vpX, vpY);
+        const bR = project3D(65, 0, z, camX, camY, fov, vpX, vpY);
+        const tR = project3D(65, 95, z, camX, camY, fov, vpX, vpY);
+        ctx.strokeStyle = 'rgba(161, 161, 170, 0.55)';
+        ctx.lineWidth = Math.max(1, 4 * bL.scale);
+        ctx.beginPath();
+        ctx.moveTo(bL.x, bL.y);
+        ctx.lineTo(tL.x, tL.y);
+        ctx.lineTo(tR.x, tR.y);
+        ctx.lineTo(bR.x, bR.y);
+        ctx.stroke();
+      }
+
+      // Authentic Vande Bharat / WAP-7 Driver Cab Control Desk & Windshield Frame
+      // Structural A-Pillars
+      ctx.fillStyle = '#09090b';
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(cw * 0.12, 0);
+      ctx.lineTo(cw * 0.05, ch);
+      ctx.lineTo(0, ch);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(cw, 0);
+      ctx.lineTo(cw * 0.88, 0);
+      ctx.lineTo(cw * 0.95, ch);
+      ctx.lineTo(cw, ch);
+      ctx.fill();
+
+      // Animated Windshield Wiper Blade
+      const wiperAngle = weatherMode === 'rain' ? Math.sin(worldZ * 0.08) * 0.55 : -0.45;
+      ctx.save();
+      ctx.translate(cw * 0.5, ch - 68);
+      ctx.rotate(wiperAngle);
+      ctx.strokeStyle = '#18181b';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, -165);
+      ctx.stroke();
+      ctx.restore();
+
+      // Lower Driver Control Console Desk
+      const deskY = ch - 72;
+      const deskGrad = ctx.createLinearGradient(0, deskY, 0, ch);
+      deskGrad.addColorStop(0, '#27272a');
+      deskGrad.addColorStop(0.2, '#18181b');
+      deskGrad.addColorStop(1, '#09090b');
+      ctx.fillStyle = deskGrad;
+      ctx.beginPath();
+      ctx.moveTo(cw * 0.04, ch);
+      ctx.lineTo(cw * 0.14, deskY);
+      ctx.lineTo(cw * 0.86, deskY);
+      ctx.lineTo(cw * 0.96, ch);
+      ctx.closePath();
+      ctx.fill();
+
+      // KAVACH v4.0 Digital Cab Display Screen (Center Console)
+      const scrX = cw * 0.5 - 75;
+      const scrY = deskY + 10;
+      ctx.fillStyle = '#09090b';
+      ctx.strokeStyle = '#52525b';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.roundRect(scrX, scrY, 150, 52, 6);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 14px "JetBrains Mono", monospace';
+      ctx.fillText(`${Math.round(currentSpeed)} KM/H`, scrX + 14, scrY + 25);
+      ctx.fillStyle = '#a1a1aa';
+      ctx.font = '9px "JetBrains Mono", monospace';
+      ctx.fillText('KAVACH SIL-4 • ASPECT CLEAR', scrX + 14, scrY + 41);
+    }
+
+    // Main 60FPS Animation Loop
+    let lastTime = performance.now();
+    let frameCount = 0, fpsTimer = 0;
+
+    function animateRealMotion(now) {
+      const dt = Math.min(0.05, (now - lastTime) / 1000);
+      lastTime = now;
+
+      // FPS Counter
+      frameCount++;
+      fpsTimer += dt;
+      if (fpsTimer >= 0.5) {
+        const fps = Math.min(60, Math.round(frameCount / fpsTimer));
+        const fpsEl = document.getElementById('fps-counter');
+        if (fpsEl) fpsEl.textContent = `${fps} FPS`;
+        frameCount = 0;
+        fpsTimer = 0;
+      }
+
+      // Smooth Physics Inertia toward targetSpeed
+      const accelRate = isBraking ? 44 : 28;
+      if (Math.abs(currentSpeed - targetSpeed) > 0.4) {
+        currentSpeed += Math.sign(targetSpeed - currentSpeed) * accelRate * dt;
+      } else {
+        currentSpeed = targetSpeed;
+      }
+
+      // Update HUD Speed Readout & Wheel Rotation Angle
+      const hudSpd = document.getElementById('hud-speed-value');
+      if (hudSpd) hudSpd.textContent = Math.round(currentSpeed);
+      wheelRotationAngle += (currentSpeed * dt * 0.35);
+
+      // Advance 3D World Z coordinate proportional to train velocity
+      worldZ += currentSpeed * dt * 1.85;
+      if (arcFlashIntensity > 0) arcFlashIntensity = Math.max(0, arcFlashIntensity - dt * 2.8);
+
+      // Render Active Camera Mode
+      ctx.clearRect(0, 0, cw, ch);
+      if (cameraMode === 'cinema') {
+        renderCinemaPan(dt);
+      } else if (cameraMode === 'chase') {
+        renderChaseCam(dt);
+      } else {
+        renderCockpitPOV(dt);
+      }
+
+      // High-Speed Diagonal Rain Overlay when in 'rain' mode
+      if (weatherMode === 'rain') {
+        ctx.strokeStyle = 'rgba(254, 243, 199, 0.28)';
+        ctx.lineWidth = 1.2;
+        const windShift = Math.max(4, currentSpeed * 0.14);
+        rainStreaks.forEach(r => {
+          r.y += r.speed;
+          r.x -= windShift;
+          if (r.y > ch) { r.y = -20; r.x = Math.random() * (cw + 200); }
+          if (r.x < -50) { r.x = cw + 100; }
+          ctx.beginPath();
+          ctx.moveTo(r.x, r.y);
+          ctx.lineTo(r.x - windShift * 1.4, r.y + r.len);
+          ctx.stroke();
+        });
+      }
+
+      requestAnimationFrame(animateRealMotion);
+    }
+
+    // =====================================================================
+    // 3. UI CONTROLLERS: RAKE MODEL, CAMERA, WEATHER, THROTTLE & PALETTES
+    // =====================================================================
+    function setRakeModel(model) {
+      activeRakeModel = model;
+      ['vb-saffron', 'vb-white', 'wap7-lhb'].forEach(m => {
+        const btn = document.getElementById(`rake-btn-${m}`);
+        if (!btn) return;
+        if (m === model) {
+          btn.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold theme-accent-bg transition flex items-center gap-1.5';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-lg text-[11px] font-medium text-zinc-400 hover:text-white transition flex items-center gap-1.5';
+        }
+      });
+    }
+
+    function setCameraMode(mode) {
+      cameraMode = mode;
+      ['cinema', 'chase', 'cockpit'].forEach(m => {
+        const btn = document.getElementById(`cam-btn-${m}`);
+        if (!btn) return;
+        if (m === mode) {
+          btn.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold theme-accent-bg transition flex items-center gap-1.5';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-lg text-[11px] font-medium text-zinc-400 hover:text-white transition flex items-center gap-1.5';
+        }
+      });
+    }
+
+    function setWeatherMode(wx) {
+      weatherMode = wx;
+      ['dusk', 'rain', 'twilight'].forEach(w => {
+        const btn = document.getElementById(`wx-${w}`);
+        if (!btn) return;
+        if (w === wx) {
+          btn.className = 'px-2.5 py-1 rounded-lg font-bold bg-white/15 text-amber-300 transition';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-lg font-medium text-zinc-400 hover:text-white transition';
+        }
+      });
+    }
+
+    function setTargetThrottle(val) {
+      targetSpeed = parseInt(val, 10);
+      isBraking = targetSpeed < currentSpeed - 10;
+      const lbl = document.getElementById('throttle-label');
+      if (lbl) lbl.textContent = `${targetSpeed} km/h`;
+      const brkTemp = document.getElementById('brake-temp-readout');
+      if (brkTemp) {
+        brkTemp.textContent = isBraking ? '540°C FRICTION GLOW' : '185°C NOMINAL';
+      }
+    }
+
+    function toggleStationBrake() {
+      const btnText = document.getElementById('halt-btn-text');
+      const slider = document.getElementById('speed-slider');
+      if (targetSpeed > 0) {
+        isBraking = true;
+        targetSpeed = 0;
+        if (slider) slider.value = 0;
+        setTargetThrottle(0);
+        if (btnText) btnText.textContent = 'Release Brakes & Launch';
+      } else {
+        isBraking = false;
+        const cruise = TRAIN_DATABASE[activeTrainNum]?.speed || 130;
+        targetSpeed = cruise;
+        if (slider) slider.value = cruise;
+        setTargetThrottle(cruise);
+        if (btnText) btnText.textContent = 'Engage Friction Brake';
+      }
+    }
+
+    function boostHighSpeed() {
+      isBraking = false;
+      targetSpeed = 160;
+      const slider = document.getElementById('speed-slider');
+      if (slider) slider.value = 160;
+      setTargetThrottle(160);
+      arcFlashIntensity = 1.0;
+    }
+
+    function triggerHornArc() {
+      arcFlashIntensity = 1.25;
+    }
+
+    // Autocomplete Suggestions for Search Input
+    function showTrainSuggestions() {
+      filterTrainSuggestions(document.getElementById('main-train-input')?.value || '');
+    }
+
+    function filterTrainSuggestions(query) {
+      const menu = document.getElementById('train-suggestions');
+      if (!menu) return;
+      const q = query.trim().toLowerCase();
+      const matches = Object.values(TRAIN_DATABASE).filter(t =>
+        t.number.includes(q) || t.name.toLowerCase().includes(q) || q === ''
+      );
+
+      if (matches.length === 0) {
+        menu.classList.add('hidden');
+        return;
+      }
+
+      menu.innerHTML = matches.map(t => `
+        <div onclick="selectSuggestedTrain('${t.number}')"
+             class="px-4 py-2.5 hover:bg-white/10 cursor-pointer flex items-center justify-between text-xs transition">
+          <div>
+            <span class="font-mono font-bold theme-accent-text mr-2">${t.number}</span>
+            <span class="font-semibold">${t.name}</span>
+          </div>
+          <span class="font-mono text-[11px] opacity-65">${t.routeShort} • ${t.speed} km/h</span>
+        </div>
+      `).join('');
+      menu.classList.remove('hidden');
+    }
+
+    function selectSuggestedTrain(num) {
+      document.getElementById('train-suggestions')?.classList.add('hidden');
+      loadTrainTelemetry(num, '28 Oct 2026');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('train-suggestions');
+      const input = document.getElementById('main-train-input');
+      if (menu && !menu.contains(e.target) && e.target !== input) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    // Render Recent Lookups (Matches User's 5 Screenshot Cards)
+    function renderRecentLookups() {
+      const container = document.getElementById('recent-lookups-container');
+      if (!container) return;
+
+      container.innerHTML = RECENT_LOOKUPS.map((item, idx) => {
+        const train = TRAIN_DATABASE[item.number] || TRAIN_DATABASE['20891'];
+        const isSelected = (item.number === activeTrainNum && idx === 0);
+        return `
+          <div onclick="handleRecentClick('${item.number}', '${item.type}', '${item.dateLabel}')"
+               onmousemove="updateSpotlight(event, this)"
+               class="spotlight-card cursor-pointer p-3.5 rounded-2xl theme-elevated ${isSelected ? 'border-amber-500/50' : ''}">
+            <div class="flex items-center justify-between gap-2 mb-1 relative z-10">
+              <span class="font-bold text-sm">
+                ${item.type}: ${item.number}
+              </span>
+              <span class="px-2 py-0.5 rounded-md theme-accent-soft font-mono text-[10px] font-bold">
+                ${item.badge}
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between text-xs opacity-70 mb-2 relative z-10">
+              <span>${item.dateLabel}</span>
+              <span class="font-mono font-semibold">${train.routeShort}</span>
+            </div>
+
+            <div class="w-full h-1 rounded-full bg-black/40 overflow-hidden relative z-10">
+              <div class="h-full rounded-full theme-accent-bg transition-all duration-500" style="width: ${item.progress}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateSpotlight(e, el) {
+      const rect = el.getBoundingClientRect();
+      el.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+      el.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    }
+
+    function handleRecentClick(number, type, dateLabel) {
+      loadTrainTelemetry(number, dateLabel);
+      if (type === 'Schedule') {
+        switchMainTab('schedule');
+      } else {
+        switchMainTab('live');
+      }
+    }
+
+    // Load Train Telemetry & Update 3D Canvas + Rake Model
+    function loadTrainTelemetry(number, dateLabel) {
+      const clean = (number || '20891').trim();
+      const t = TRAIN_DATABASE[clean] || TRAIN_DATABASE['20891'];
+      activeTrainNum = t.number;
+      isBraking = false;
+      targetSpeed = t.speed;
+      arcFlashIntensity = 1.0;
+
+      if (t.rakeModel) {
+        setRakeModel(t.rakeModel);
+      }
+
+      const slider = document.getElementById('speed-slider');
+      if (slider) slider.value = t.speed;
+      setTargetThrottle(t.speed);
+
+      document.getElementById('hud-train-num').textContent = t.number;
+      document.getElementById('hud-train-name').textContent = t.name;
+      document.getElementById('hud-train-badge').textContent = t.status;
+      document.getElementById('hud-train-sub').textContent = t.corridor;
+      document.getElementById('hud-next-station').textContent = t.nextStation;
+      document.getElementById('floating-eta-tag').textContent = t.etaText;
+      document.getElementById('timeline-summary-text').textContent = t.summaryText;
+
+      const mainInput = document.getElementById('main-train-input');
+      if (mainInput) mainInput.value = t.number;
+
+      renderStationTimeline(t);
+      renderScheduleTable(t);
+      renderRecentLookups();
+    }
+
+    function renderStationTimeline(t) {
+      const track = document.getElementById('station-timeline-track');
+      if (!track) return;
+
+      track.innerHTML = t.stations.map((st, idx) => {
+        const isCurrent = st.current;
+        const isDone = st.done;
+        return `
+          <div class="flex-1 flex flex-col items-center relative">
+            ${idx < t.stations.length - 1 ? `
+              <div class="absolute top-3.5 left-1/2 w-full h-1 ${isDone ? 'theme-accent-bg' : 'bg-zinc-800'}"></div>
+            ` : ''}
+
+            <div class="relative z-10 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
+              isCurrent
+                ? 'theme-accent-bg ring-4 ring-amber-500/30 animate-bounce'
+                : isDone
+                  ? 'theme-accent-soft'
+                  : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
+            }">
+              ${isCurrent ? '<i class="fa-solid fa-train text-[10px]"></i>' : isDone ? '<i class="fa-solid fa-check text-[10px]"></i>' : (idx + 1)}
+            </div>
+
+            <div class="mt-2 text-center">
+              <div class="font-mono font-bold text-xs ${isCurrent ? 'theme-accent-text' : ''}">${st.code}</div>
+              <div class="text-[11px] opacity-75">${st.name}</div>
+              <div class="text-[10px] font-mono opacity-50">${st.dep !== 'End' ? st.dep : st.arr} • PF ${st.pf}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderScheduleTable(t) {
+      const tbody = document.getElementById('schedule-table-body');
+      const titleNum = document.getElementById('sched-title-num');
+      if (titleNum) titleNum.textContent = `${t.number} — ${t.name}`;
+      if (!tbody) return;
+
+      tbody.innerHTML = t.stations.map(st => `
+        <tr class="hover:bg-white/5 transition">
+          <td class="py-3 px-3 font-bold theme-accent-text">${st.code}</td>
+          <td class="py-3 px-3 font-sans font-semibold">${st.name}</td>
+          <td class="py-3 px-3 opacity-80">${st.arr}</td>
+          <td class="py-3 px-3 opacity-80">${st.dep}</td>
+          <td class="py-3 px-3 opacity-60">02m</td>
+          <td class="py-3 px-3"><span class="px-2 py-0.5 rounded theme-surface theme-accent-text">PF #${st.pf}</span></td>
+          <td class="py-3 px-3">
+            ${st.current
+              ? '<span class="px-2 py-0.5 rounded theme-accent-soft font-bold">APPROACHING</span>'
+              : st.done
+                ? '<span class="opacity-50">Departed</span>'
+                : '<span class="theme-accent-text">On Schedule</span>'}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function selectTrainFromInput() {
+      const val = document.getElementById('main-train-input')?.value || '20891';
+      loadTrainTelemetry(val, '28 Oct 2026');
+    }
+
+    function inspectCoach(code, desc) {
+      const label = document.getElementById('coach-info-label');
+      if (label) label.textContent = `[${code}] — ${desc}`;
+    }
+
+    // Theme Palette Switcher (Saffron / Platinum / Crimson / Amethyst / Light)
+    function setPalette(pal) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-palette', pal);
+
+      ['saffron', 'platinum', 'crimson', 'amethyst'].forEach(p => {
+        const btn = document.getElementById(`pal-${p}`);
+        if (!btn) return;
+        if (p === pal) {
+          btn.className = 'palette-btn px-2.5 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1.5 bg-white/15 text-white border border-white/25 transition';
+        } else {
+          btn.className = 'palette-btn px-2.5 py-1 rounded-lg text-[11px] font-medium flex items-center gap-1.5 text-zinc-400 hover:text-white transition';
+        }
+      });
+    }
+
+    function toggleLightMode() {
+      const html = document.documentElement;
+      const icon = document.getElementById('mode-icon');
+      const text = document.getElementById('mode-text');
+      html.classList.toggle('dark');
+
+      if (html.classList.contains('dark')) {
+        icon.className = 'fa-solid fa-sun text-amber-400';
+        text.textContent = 'High Contrast';
+      } else {
+        icon.className = 'fa-solid fa-moon text-amber-600';
+        text.textContent = 'Dark Motion UI';
+      }
+    }
+
+    function switchMainTab(tab) {
+      const views = {
+        live: document.getElementById('view-live-status'),
+        schedule: document.getElementById('view-schedule'),
+        between: document.getElementById('view-between')
+      };
+      const btns = {
+        live: document.getElementById('tab-btn-live'),
+        schedule: document.getElementById('tab-btn-schedule'),
+        between: document.getElementById('tab-btn-between')
+      };
+
+      Object.keys(views).forEach(k => {
+        if (k === tab) {
+          views[k]?.classList.remove('hidden');
+          btns[k].className = 'px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all theme-accent-bg shadow-sm flex items-center gap-2';
+        } else {
+          views[k]?.classList.add('hidden');
+          btns[k].className = 'px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all opacity-70 hover:opacity-100 flex items-center gap-2';
+        }
+      });
+    }
+
+    function adjustFontSize(delta) {
+      const html = document.documentElement;
+      if (delta === 0) html.style.fontSize = '16px';
+      if (delta === 1) html.style.fontSize = '17.5px';
+      if (delta === -1) html.style.fontSize = '14.5px';
+    }
+
+    // Boot 60FPS Real Motion Engine on Load
+    window.onload = function () {
+      resizeMotionCanvas();
+      initParticles();
+      loadTrainTelemetry('20891', '06 Sep 2026');
+      requestAnimationFrame(animateRealMotion);
+
+      setInterval(() => {
+        const now = new Date();
+        const timeStr = now.toTimeString().split(' ')[0];
+        const clockEl = document.getElementById('live-ist-clock');
+        if (clockEl) clockEl.textContent = `28-10-2026 • ${timeStr} IST`;
+      }, 1000);
+    };
+  </script>
+</body>
+</html>

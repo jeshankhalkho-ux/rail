@@ -1,0 +1,227 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* =====================================================================
+   1. NON-BLUE & NON-GREEN EXECUTIVE DARK PALETTE SYSTEM
+      (Saffron Gold, Platinum Champagne, Rajdhani Crimson, Amethyst, Light)
+   ===================================================================== */
+:root,
+html[data-palette="saffron"] {
+  --bg-canvas: #09090b;
+  --bg-surface: #121215;
+  --bg-elevated: #18181c;
+  --bg-glass: rgba(20, 20, 24, 0.82);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(245, 158, 11, 0.45);
+  --accent-primary: #f59e0b;       /* Vande Saffron Gold */
+  --accent-secondary: #ea580c;     /* Deep Aerodynamic Tangelo */
+  --accent-glow: rgba(245, 158, 11, 0.22);
+  --accent-soft: rgba(245, 158, 11, 0.12);
+  --accent-text: #fbbf24;
+  --accent-champagne: #fde68a;
+  --text-main: #fafafa;
+  --text-muted: #a1a1aa;
+  --btn-fg: #09090b;
+}
+
+/* Palette 2: Platinum & Champagne Gold (Luxury Monochrome Dark) */
+html[data-palette="platinum"] {
+  --bg-canvas: #08080a;
+  --bg-surface: #111114;
+  --bg-elevated: #19191e;
+  --bg-glass: rgba(18, 18, 22, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-focus: rgba(212, 175, 55, 0.48);
+  --accent-primary: #e5c158;       /* Champagne Gold */
+  --accent-secondary: #b38f2d;     /* Brushed Gold */
+  --accent-glow: rgba(229, 193, 88, 0.20);
+  --accent-soft: rgba(229, 193, 88, 0.12);
+  --accent-text: #f3d87d;
+  --accent-champagne: #ffffff;
+  --text-main: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --btn-fg: #09090b;
+}
+
+/* Palette 3: Rajdhani Crimson & Charcoal (Executive Ruby Dark) */
+html[data-palette="crimson"] {
+  --bg-canvas: #0b0809;
+  --bg-surface: #141012;
+  --bg-elevated: #1e171a;
+  --bg-glass: rgba(22, 16, 19, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(244, 63, 94, 0.48);
+  --accent-primary: #f43f5e;       /* Rajdhani Signal Crimson */
+  --accent-secondary: #e11d48;     /* Deep Ruby */
+  --accent-glow: rgba(244, 63, 94, 0.24);
+  --accent-soft: rgba(244, 63, 94, 0.12);
+  --accent-text: #fb7185;
+  --accent-champagne: #fecdd3;
+  --text-main: #fff1f2;
+  --text-muted: #a89f9f;
+  --btn-fg: #ffffff;
+}
+
+/* Palette 4: Amethyst Velvet (Modern Raycast / Linear Dark) */
+html[data-palette="amethyst"] {
+  --bg-canvas: #09080d;
+  --bg-surface: #13111c;
+  --bg-elevated: #1c1829;
+  --bg-glass: rgba(19, 17, 28, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(168, 85, 247, 0.48);
+  --accent-primary: #a855f7;       /* Royal Amethyst */
+  --accent-secondary: #7e22ce;     /* Deep Violet */
+  --accent-glow: rgba(168, 85, 247, 0.24);
+  --accent-soft: rgba(168, 85, 247, 0.13);
+  --accent-text: #c084fc;
+  --accent-champagne: #e9d5ff;
+  --text-main: #faf5ff;
+  --text-muted: #a19bb0;
+  --btn-fg: #ffffff;
+}
+
+/* Palette 5: High-Contrast Daylight Ivory (Clean Light Mode) */
+html:not(.dark) {
+  --bg-canvas: #f6f5f2;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f0eee8;
+  --bg-glass: rgba(255, 255, 255, 0.96);
+  --border-subtle: rgba(24, 24, 27, 0.14);
+  --border-focus: rgba(234, 88, 12, 0.50);
+  --accent-primary: #ea580c;       /* Terracotta Saffron */
+  --accent-secondary: #c2410c;
+  --accent-glow: rgba(234, 88, 12, 0.14);
+  --accent-soft: rgba(234, 88, 12, 0.12);
+  --accent-text: #c2410c;
+  --accent-champagne: #9a3412;
+  --text-main: #09090b;
+  --text-muted: #52525b;
+  --btn-fg: #ffffff;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--text-main);
+  overflow-x: hidden;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Dynamic Theme Helper Classes */
+.theme-surface {
+  background-color: var(--bg-glass);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  backdrop-filter: blur(24px);
+}
+.theme-elevated {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+}
+.theme-accent-bg {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  color: var(--btn-fg);
+}
+.theme-accent-text {
+  color: var(--accent-text);
+}
+.theme-accent-soft {
+  background-color: var(--accent-soft);
+  border: 1px solid var(--border-focus);
+  color: var(--accent-text);
+}
+.theme-input {
+  background-color: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.theme-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.75;
+}
+.theme-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* Mouse-Tracked Spotlight Card Effect */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+  color: var(--text-main);
+}
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    380px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--accent-glow),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+.spotlight-card:hover {
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px -12px var(--accent-glow);
+}
+
+html:not(.dark) .spotlight-card {
+  border-color: var(--border-subtle);
+  background-color: var(--bg-surface);
+}
+
+/* Ambient Warm Horizon Backdrop */
+.ambient-backdrop {
+  background:
+    radial-gradient(circle at 18% 8%, var(--accent-glow) 0%, transparent 42%),
+    radial-gradient(circle at 84% 16%, rgba(251, 191, 36, 0.07) 0%, transparent 40%);
+}
+
+/* Executive CTA Button Specular Sweep */
+.btn-executive {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 26px -6px var(--accent-glow);
+}
+.btn-executive::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: rotate(25deg);
+  transition: left 0.65s ease;
+}
+.btn-executive:hover::after {
+  left: 130%;
+}
+.btn-executive:hover {
+  transform: translateY(-1.5px);
+  filter: brightness(1.06);
+  box-shadow: 0 14px 32px -4px var(--accent-glow);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(161, 161, 170, 0.25); border-radius: 9999px; }
